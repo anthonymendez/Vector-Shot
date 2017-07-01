@@ -6,24 +6,26 @@ public class Laser : MonoBehaviour {
 
     public float moveSpeed;
 
-    private GameObjectPool LaserPool;
+    GameObjectPool LaserPool;
+    Rigidbody2D physics;
 
     void Awake() {
         LaserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
+        physics = GetComponent<Rigidbody2D>();
     }
 
 	// Use this for initialization
 	void Start () {
         LaserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
+        physics = GetComponent<Rigidbody2D>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        //I just typed these two trig equations because I knew they would give me some sort of angle, and apparently this works
-        //      float xDirectionIntensity = Mathf.Asin(transform.rotation.eulerAngles.x / transform.rotation.eulerAngles.z);
-        //       float yDirectionIntensity = Mathf.Acos(transform.rotation.eulerAngles.y / transform.rotation.eulerAngles.z);
-        //        transform.Translate(new Vector3(xDirectionIntensity, yDirectionIntensity,0f)*moveSpeed/Variables.speedDampener);
-        transform.Translate(new Vector3(0f,1f,0f)*moveSpeed/Variables.speedDampener);
+        //Much better way of calculating movement
+        Transform temp = transform;
+        temp.Translate(new Vector3(0f,1f,0f)*moveSpeed/Variables.speedDampener);
+        physics.MovePosition(temp.position);
 	}
 
     void OnCollisionEnter2D(Collision2D collision) {
