@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-
-    public float acceleration;
+    
     public float moveSpeed;
     public float rotateSpeed;
     public float shotDelay;
@@ -37,7 +36,6 @@ public class Player : MonoBehaviour {
         //Get X and Y movements
         float x = Input.GetAxis("Horizontal"), y = Input.GetAxis("Vertical");
         //Move the player with our specified input
-        //transform.Translate(new Vector3(0f, y, 0f) * moveSpeed / Variables.speedDampener);
         Transform tempTrans = transform;
         tempTrans.Translate(new Vector3(0f, y, 0f) * moveSpeed / Variables.speedDampener);
         float zRot = transform.rotation.eulerAngles.z;
