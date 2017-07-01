@@ -53,16 +53,9 @@ public class Player : MonoBehaviour {
             timeSinceLastShot = 0;
             GameObject shot = LaserPool.getGameObject();
             shot.transform.rotation = transform.rotation;
-            //We're going to edit the position of the shot here so it's right on our player
-            Vector3 shotPosition = transform.position;
-            float x = transform.rotation.eulerAngles.x,
-                  y = transform.rotation.eulerAngles.y,
-                  z = transform.rotation.eulerAngles.z;
-
-            shotPosition.x += (2.2f * Mathf.Sin(z));
-            shotPosition.y += (2.2f * Mathf.Cos(z));
-            shotPosition.z = 1f;
-            shot.transform.position = shotPosition;
+            //We're going to edit the position of the shot here so it's right in front our player
+            shot.transform.position = transform.position;
+            shot.transform.Translate(0f,2.2f,0f);
         }
     }
 }
