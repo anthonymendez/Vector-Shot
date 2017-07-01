@@ -10,12 +10,14 @@ public class Player : MonoBehaviour {
     private GameObject Child;
     private float timeSinceLastShot;
     private int lasersShot;
+    private GameObjectPool LaserPool;
 
 	// Use this for initialization
 	void Start () {
         lasersShot = 0;
         timeSinceLastShot = 0;
         Child = transform.GetChild(0).gameObject;
+        LaserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
 	}
 	
 	// Update is called once per frame
@@ -50,7 +52,7 @@ public class Player : MonoBehaviour {
         bool isShooting = Input.GetButton("Fire1") || Input.GetButtonDown("Fire1");
         if (isShooting && timeSinceLastShot >= shotDelay) {
             timeSinceLastShot = 0;
-
+            GameObject shot = LaserPool.getGameObject();
         }
     }
 }
