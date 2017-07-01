@@ -6,9 +6,6 @@ public class Laser : MonoBehaviour {
 
     public float moveSpeed;
 
-    //Will be initialized in Player or Enemy
-    public Vector3 direction;
-
     private GameObjectPool LaserPool;
 
 	// Use this for initialization
@@ -18,7 +15,7 @@ public class Laser : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Translate(direction*moveSpeed/Variables.speedDampener);
+        transform.Translate(new Vector3(Mathf.Asin(transform.rotation.eulerAngles.x / transform.rotation.eulerAngles.z), Mathf.Acos(transform.rotation.eulerAngles.y/ transform.rotation.eulerAngles.z),0f)*moveSpeed/Variables.speedDampener);
 	}
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -26,7 +23,7 @@ public class Laser : MonoBehaviour {
         //Check if colliding object is laser, if so, each laser 
         //calls this method and adds themselves to the pool
         if (collision.gameObject.CompareTag("LaserShot")) {
-            LaserPool.addGameObject(gameObject);
+            LaserPool.addGameObject(this.gameObject);
             //For any other object that isn't a wall, 
             //we destroy the object since everything in this game 
             //is 1 a hit kill

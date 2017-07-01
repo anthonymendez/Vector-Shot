@@ -54,6 +54,8 @@ public class Player : MonoBehaviour {
         if (isShooting && timeSinceLastShot >= shotDelay) {
             timeSinceLastShot = 0;
             GameObject shot = LaserPool.getGameObject();
+            shot.transform.rotation = Child.transform.rotation;
+            
         }
     }
 }
