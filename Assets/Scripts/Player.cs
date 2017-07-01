@@ -5,9 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     public float moveSpeed;
+    public float rotateSpeed;
     public float shotDelay;
-
-    private GameObject Child;
+    
     private float timeSinceLastShot;
     private int lasersShot;
     private GameObjectPool LaserPool;
@@ -16,7 +16,6 @@ public class Player : MonoBehaviour {
 	void Start () {
         lasersShot = 0;
         timeSinceLastShot = 0;
-        Child = transform.GetChild(0).gameObject;
         LaserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
 	}
 	
@@ -35,16 +34,14 @@ public class Player : MonoBehaviour {
         //Get X and Y movements
         float x = Input.GetAxis("Horizontal"), y = Input.GetAxis("Vertical");
         //Move the player with our specified input
-        transform.Translate(new Vector3(x, y, 0f) * moveSpeed / Variables.speedDampener);
+        transform.Translate(new Vector3(0f, y, 0f) * moveSpeed / Variables.speedDampener);
 
-        //Incredibly hacky way to rotate the Object without messing up the relative Translate
-        //Will have to find a better solution
-        if (Mathf.Abs(x) > 0.05 || Mathf.Abs(y) > 0.05) {
+        //Rotates the players with horizontal controls. A not so hacky solution...thank god.
+        if (Mathf.Abs(x) > 0.05) {
             //Calculate the rotation we're traveling in
             float atan = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
             //Apply rotation with Slerp to make the rotation more smooth
-            Child.transform.rotation = Quaternion.Slerp(Child.transform.rotation,Quaternion.Euler(0f, 0f, atan - 90),moveSpeed*Time.deltaTime);
-            
+            transform.Rotate(new Vector3(0f,0f,-x)*rotateSpeed,Space.Self);
         }
         
         trackShooting();
@@ -55,13 +52,16 @@ public class Player : MonoBehaviour {
         if (isShooting && timeSinceLastShot >= shotDelay) {
             timeSinceLastShot = 0;
             GameObject shot = LaserPool.getGameObject();
-            shot.transform.rotation = Child.transform.rotation;
+            shot.transform.rotation = transform.rotation;
             //We're going to edit the position of the shot here so it's right on our player
             Vector3 shotPosition = transform.position;
-            float xDirectionIntensity = Mathf.Asin(transform.rotation.eulerAngles.x / transform.rotation.eulerAngles.z);
-            float yDirectionIntensity = Mathf.Acos(transform.rotation.eulerAngles.y / transform.rotation.eulerAngles.z);
-            shotPosition.x += (xDirectionIntensity * 0.25f);
-            shotPosition.y += (yDirectionIntensity * 0.25f);
+            float x = transform.rotation.eulerAngles.x,
+                  y = transform.rotation.eulerAngles.y,
+                  z = transform.rotation.eulerAngles.z;
+
+            shotPosition.x += (2.2f * Mathf.Sin(z));
+            shotPosition.y += (2.2f * Mathf.Cos(z));
+            shotPosition.z = 1f;
             shot.transform.position = shotPosition;
         }
     }
