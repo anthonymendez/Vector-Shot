@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+    public float acceleration;
     public float moveSpeed;
     public float rotateSpeed;
     public float shotDelay;
@@ -11,12 +12,14 @@ public class Player : MonoBehaviour {
     private float timeSinceLastShot;
     private int lasersShot;
     private GameObjectPool LaserPool;
+    private Rigidbody2D physics;
 
 	// Use this for initialization
 	void Start () {
         lasersShot = 0;
         timeSinceLastShot = 0;
         LaserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
+        physics = GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
@@ -34,16 +37,12 @@ public class Player : MonoBehaviour {
         //Get X and Y movements
         float x = Input.GetAxis("Horizontal"), y = Input.GetAxis("Vertical");
         //Move the player with our specified input
-        transform.Translate(new Vector3(0f, y, 0f) * moveSpeed / Variables.speedDampener);
-
-        //Rotates the players with horizontal controls. A not so hacky solution...thank god.
-        if (Mathf.Abs(x) > 0.05) {
-            //Calculate the rotation we're traveling in
-            float atan = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
-            //Apply rotation with Slerp to make the rotation more smooth
-            transform.Rotate(new Vector3(0f,0f,-x)*rotateSpeed,Space.Self);
-        }
-        
+        //transform.Translate(new Vector3(0f, y, 0f) * moveSpeed / Variables.speedDampener);
+        Transform tempTrans = transform;
+        tempTrans.Translate(new Vector3(0f, y, 0f) * moveSpeed / Variables.speedDampener);
+        float zRot = transform.rotation.eulerAngles.z;
+        physics.MovePosition(tempTrans.position);
+        physics.MoveRotation(zRot - x * rotateSpeed / Variables.speedDampener);   
         trackShooting();
     }
 

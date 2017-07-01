@@ -39,7 +39,9 @@ public class Laser : MonoBehaviour {
             //For any other object that isn't a wall, 
             //we destroy the object since everything in this game 
             //is 1 a hit kill
-        } else if (!collision.gameObject.CompareTag("Wall")) {
+        } else if (collision.gameObject.CompareTag("Wall")) {
+            LaserPool.addGameObject(gameObject);
+        } else {
             Destroy(collision.gameObject);
             LaserPool.addGameObject(gameObject);
         }
