@@ -44,6 +44,7 @@ public class Player : MonoBehaviour {
             float atan = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
             //Apply rotation with Slerp to make the rotation more smooth
             Child.transform.rotation = Quaternion.Slerp(Child.transform.rotation,Quaternion.Euler(0f, 0f, atan - 90),moveSpeed*Time.deltaTime);
+            
         }
         
         trackShooting();
@@ -55,7 +56,13 @@ public class Player : MonoBehaviour {
             timeSinceLastShot = 0;
             GameObject shot = LaserPool.getGameObject();
             shot.transform.rotation = Child.transform.rotation;
-            
+            //We're going to edit the position of the shot here so it's right on our player
+            Vector3 shotPosition = transform.position;
+            float xDirectionIntensity = Mathf.Asin(transform.rotation.eulerAngles.x / transform.rotation.eulerAngles.z);
+            float yDirectionIntensity = Mathf.Acos(transform.rotation.eulerAngles.y / transform.rotation.eulerAngles.z);
+            shotPosition.x += (xDirectionIntensity * 0.25f);
+            shotPosition.y += (yDirectionIntensity * 0.25f);
+            shot.transform.position = shotPosition;
         }
     }
 }

@@ -376,7 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  shotDelay: 2
+  shotDelay: 0.5
 --- !u!50 &733137420
 Rigidbody2D:
   serializedVersion: 4

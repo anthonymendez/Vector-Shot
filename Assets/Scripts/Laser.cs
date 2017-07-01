@@ -15,7 +15,10 @@ public class Laser : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Translate(new Vector3(Mathf.Asin(transform.rotation.eulerAngles.x / transform.rotation.eulerAngles.z), Mathf.Acos(transform.rotation.eulerAngles.y/ transform.rotation.eulerAngles.z),0f)*moveSpeed/Variables.speedDampener);
+        //I just typed these two trig equations because I knew they would give me some sort of angle, and apparently this works
+        float xDirectionIntensity = Mathf.Asin(transform.rotation.eulerAngles.x / transform.rotation.eulerAngles.z);
+        float yDirectionIntensity = Mathf.Acos(transform.rotation.eulerAngles.y / transform.rotation.eulerAngles.z);
+        transform.Translate(new Vector3(xDirectionIntensity, yDirectionIntensity,0f)*moveSpeed/Variables.speedDampener);
 	}
 
     void OnCollisionEnter2D(Collision2D collision) {
