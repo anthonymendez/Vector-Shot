@@ -9,6 +9,7 @@ TagManager:
   - REnemy
   - Laserpool
   - LaserShot
+  - Wall
   layers:
   - Default
   - TransparentFX

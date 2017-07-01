@@ -37,14 +37,15 @@ public class Player : MonoBehaviour {
         //Move the player with our specified input
         transform.Translate(new Vector3(x, y, 0f) * moveSpeed / Variables.speedDampener);
 
-        //Calculate the rotation we're traveling in
-        float atan = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
-
         //Incredibly hacky way to rotate the Object without messing up the relative Translate
         //Will have to find a better solution
-        if (Mathf.Abs(x) > 0.05 || Mathf.Abs(y) > 0.05)
-            Child.transform.rotation = Quaternion.Euler(0f, 0f, atan - 90);
-
+        if (Mathf.Abs(x) > 0.05 || Mathf.Abs(y) > 0.05) {
+            //Calculate the rotation we're traveling in
+            float atan = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
+            //Apply rotation with Slerp to make the rotation more smooth
+            Child.transform.rotation = Quaternion.Slerp(Child.transform.rotation,Quaternion.Euler(0f, 0f, atan - 90),moveSpeed*Time.deltaTime);
+        }
+        
         trackShooting();
     }
 

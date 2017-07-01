@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour {
 
+    public float moveSpeed;
+
+    //Will be initialized in Player or Enemy
+    public Vector3 direction;
+
     private GameObjectPool LaserPool;
 
 	// Use this for initialization
@@ -13,7 +18,7 @@ public class Laser : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        transform.Translate(direction*moveSpeed/Variables.speedDampener);
 	}
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -26,7 +31,8 @@ public class Laser : MonoBehaviour {
             //we destroy the object since everything in this game 
             //is 1 a hit kill
         } else if (!collision.gameObject.CompareTag("Wall")) {
-
+            Destroy(collision.gameObject);
+            LaserPool.addGameObject(gameObject);
         }
     }
 }
