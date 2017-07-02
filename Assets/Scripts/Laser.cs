@@ -6,17 +6,21 @@ public class Laser : MonoBehaviour {
 
     public float moveSpeed;
 
-    GameObjectPool LaserPool;
+    GameObjectPool LaserPool, MeleeEnemyPool, RangedEnemyPool;
     Rigidbody2D physics;
 
     void Awake() {
         LaserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
+        MeleeEnemyPool = GameObject.FindWithTag("MEnemyPool").GetComponent<GameObjectPool>();
+        RangedEnemyPool = GameObject.FindWithTag("REnemyPool").GetComponent<GameObjectPool>();
         physics = GetComponent<Rigidbody2D>();
     }
 
 	// Use this for initialization
 	void Start () {
         LaserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
+        MeleeEnemyPool = GameObject.FindWithTag("MEnemyPool").GetComponent<GameObjectPool>();
+        RangedEnemyPool = GameObject.FindWithTag("REnemyPool").GetComponent<GameObjectPool>();
         physics = GetComponent<Rigidbody2D>();
     }
 	
@@ -43,8 +47,12 @@ public class Laser : MonoBehaviour {
             //is 1 a hit kill
         } else if (collision.gameObject.CompareTag("Wall")) {
             LaserPool.addGameObject(gameObject);
-        } else if (collision.gameObject.CompareTag("MEnemy") || collision.gameObject.CompareTag("REnemy")) {
-            collision.gameObject.SetActive(false);
+        } else if (collision.gameObject.CompareTag("REnemy")) {
+            RangedEnemyPool.addGameObject(collision.gameObject);
+            Variables.Score += 10;
+            LaserPool.addGameObject(gameObject);
+        } else if (collision.gameObject.CompareTag("MEnemy")) {
+            MeleeEnemyPool.addGameObject(collision.gameObject);
             Variables.Score += 10;
             LaserPool.addGameObject(gameObject);
         } else if (collision.gameObject.CompareTag("Player")) {
