@@ -52,7 +52,7 @@ public class Player : MonoBehaviour {
             shot.transform.rotation = transform.rotation;
             //We're going to edit the position of the shot here so it's right in front our player
             shot.transform.position = transform.position;
-            shot.transform.Translate(0f,2.2f,0f);
+            shot.transform.Translate(0f,2.4f,0f);
         }
     }
 }

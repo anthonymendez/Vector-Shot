@@ -556,6 +556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxLOSDistance: 20
+  moveSpeed: 15
 --- !u!1001 &1854886210
 Prefab:
   m_ObjectHideFlags: 0

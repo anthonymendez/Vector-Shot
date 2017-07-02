@@ -5,12 +5,14 @@ using UnityEngine;
 public class MeleeEnemy : MonoBehaviour {
 
     public float MaxLOSDistance;
+    public float moveSpeed;
 
     RaycastHit2D sight;
     Rigidbody2D physics;
     GameObject player;
 
     Vector3 lastSeenPlayer;
+    Vector3 smoothVelocity;
 
 	// Use this for initialization
 	void Start () {
@@ -43,9 +45,10 @@ public class MeleeEnemy : MonoBehaviour {
     }
 
     void trackMovement() {
-        
-        
-
+        if (sight.collider != null && sight.collider.gameObject != gameObject && sight.collider.gameObject.CompareTag("Player")) {
+            //This is genius, thank you abar http://answers.unity3d.com/questions/585035/lookat-2d-equivalent-.html
+            transform.up = player.transform.position - transform.position;
+        }
     }
 
     void makeSureStuffIsInitialized() {
@@ -55,6 +58,10 @@ public class MeleeEnemy : MonoBehaviour {
 
         if (physics == null) {
             physics = GetComponent<Rigidbody2D>();
+        }
+
+        if (smoothVelocity == null) {
+            smoothVelocity = Vector3.zero;
         }
     }
 }

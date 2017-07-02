@@ -6,6 +6,6 @@ public class Variables {
     //Used in all Translate methods; Allows me to give fine tune movement speed
 	public static float speedDampener = 100f;
     //There's a good reason I put this here...I just can't remember right now...
-    public Camera mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+    public static Camera mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
 
 }
