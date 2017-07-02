@@ -43,8 +43,12 @@ public class Laser : MonoBehaviour {
             //is 1 a hit kill
         } else if (collision.gameObject.CompareTag("Wall")) {
             LaserPool.addGameObject(gameObject);
-        } else {
-            Destroy(collision.gameObject);
+        } else if (collision.gameObject.CompareTag("MEnemy") || collision.gameObject.CompareTag("REnemy")) {
+            collision.gameObject.SetActive(false);
+            Variables.Score += 10;
+            LaserPool.addGameObject(gameObject);
+        } else if (collision.gameObject.CompareTag("Player")) {
+            collision.gameObject.SetActive(false);
             LaserPool.addGameObject(gameObject);
         }
     }

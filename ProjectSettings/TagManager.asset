@@ -10,6 +10,9 @@ TagManager:
   - Laserpool
   - LaserShot
   - Wall
+  - Pools
+  - REnemyPool
+  - MEnemyPool
   layers:
   - Default
   - TransparentFX
@@ -20,9 +23,9 @@ TagManager:
   - 
   - 
   - Background
-  - Ships
+  - Player
+  - Enemies
   - Keys
-  - 
   - 
   - 
   - 
