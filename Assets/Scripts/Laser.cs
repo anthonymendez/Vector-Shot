@@ -6,21 +6,21 @@ public class Laser : MonoBehaviour {
 
     public float moveSpeed;
 
-    GameObjectPool LaserPool, MeleeEnemyPool, RangedEnemyPool;
+    GameObjectPool laserPool, meleeEnemyPool, rangedEnemyPool;
     Rigidbody2D physics;
 
     void Awake() {
-        LaserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
-        MeleeEnemyPool = GameObject.FindWithTag("MEnemyPool").GetComponent<GameObjectPool>();
-        RangedEnemyPool = GameObject.FindWithTag("REnemyPool").GetComponent<GameObjectPool>();
+        laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
+        meleeEnemyPool = GameObject.FindWithTag("MEnemyPool").GetComponent<GameObjectPool>();
+        rangedEnemyPool = GameObject.FindWithTag("REnemyPool").GetComponent<GameObjectPool>();
         physics = GetComponent<Rigidbody2D>();
     }
 
 	// Use this for initialization
 	void Start () {
-        LaserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
-        MeleeEnemyPool = GameObject.FindWithTag("MEnemyPool").GetComponent<GameObjectPool>();
-        RangedEnemyPool = GameObject.FindWithTag("REnemyPool").GetComponent<GameObjectPool>();
+        laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
+        meleeEnemyPool = GameObject.FindWithTag("MEnemyPool").GetComponent<GameObjectPool>();
+        rangedEnemyPool = GameObject.FindWithTag("REnemyPool").GetComponent<GameObjectPool>();
         physics = GetComponent<Rigidbody2D>();
     }
 	
@@ -36,28 +36,28 @@ public class Laser : MonoBehaviour {
         string tag = collision.gameObject.tag;
         //Check if colliding object is laser, if so, each laser 
         //calls this method and adds themselves to the pool
-        if (LaserPool == null) {
-            LaserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
+        if (laserPool == null) {
+            laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
         }
 
         if (collision.gameObject.CompareTag("LaserShot")) {
-            LaserPool.addGameObject(this.gameObject);
+            laserPool.AddGameObject(this.gameObject);
             //For any other object that isn't a wall, 
             //we destroy the object since everything in this game 
             //is 1 a hit kill
         } else if (collision.gameObject.CompareTag("Wall")) {
-            LaserPool.addGameObject(gameObject);
+            laserPool.AddGameObject(gameObject);
         } else if (collision.gameObject.CompareTag("REnemy")) {
-            RangedEnemyPool.addGameObject(collision.gameObject);
-            Variables.Score += 10;
-            LaserPool.addGameObject(gameObject);
+            rangedEnemyPool.AddGameObject(collision.gameObject);
+            Variables.score += 10;
+            laserPool.AddGameObject(gameObject);
         } else if (collision.gameObject.CompareTag("MEnemy")) {
-            MeleeEnemyPool.addGameObject(collision.gameObject);
-            Variables.Score += 10;
-            LaserPool.addGameObject(gameObject);
+            meleeEnemyPool.AddGameObject(collision.gameObject);
+            Variables.score += 10;
+            laserPool.AddGameObject(gameObject);
         } else if (collision.gameObject.CompareTag("Player")) {
             collision.gameObject.SetActive(false);
-            LaserPool.addGameObject(gameObject);
+            laserPool.AddGameObject(gameObject);
         }
     }
 }

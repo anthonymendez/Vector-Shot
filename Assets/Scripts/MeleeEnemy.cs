@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MeleeEnemy : MonoBehaviour {
 
-    public float MaxLOSDistance;
+    public float maxLOSDistance;
     public float moveSpeed;
 
     RaycastHit2D sight;
@@ -21,22 +21,22 @@ public class MeleeEnemy : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        makeSureStuffIsInitialized();
+        MakeSureStuffIsInitialized();
         RayTracking();
     }
 
     void FixedUpdate() {
-        makeSureStuffIsInitialized();
-        trackMovement();
+        MakeSureStuffIsInitialized();
+        TrackMovement();
     }
 
     void RayTracking() {
         Vector3 currentPosition = transform.position;
         Vector3 direction = (player.transform.position - transform.position).normalized;
         
-        Debug.DrawRay(currentPosition, direction * MaxLOSDistance, Color.red);
+        Debug.DrawRay(currentPosition, direction * maxLOSDistance, Color.red);
 
-        sight = Physics2D.Raycast(currentPosition, direction, MaxLOSDistance);
+        sight = Physics2D.Raycast(currentPosition, direction, maxLOSDistance);
         if (sight.collider != null) {
             if (sight.collider.gameObject != gameObject) {
 //                Debug.Log("Rigidbody Collider is: " + sight.collider);
@@ -44,7 +44,7 @@ public class MeleeEnemy : MonoBehaviour {
         }
     }
 
-    void trackMovement() {
+    void TrackMovement() {
         if (sight.collider != null && sight.collider.gameObject != gameObject && sight.collider.gameObject.CompareTag("Player")) {
             //This is genius, thank you abar http://answers.unity3d.com/questions/585035/lookat-2d-equivalent-.html
             transform.up = player.transform.position - transform.position;
@@ -57,7 +57,7 @@ public class MeleeEnemy : MonoBehaviour {
         }
     }
 
-    void makeSureStuffIsInitialized() {
+    void MakeSureStuffIsInitialized() {
         if (player == null) {
             player = GameObject.FindWithTag("Player");
         }

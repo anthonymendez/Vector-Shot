@@ -13,11 +13,11 @@ public class Camera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        checkDead();
+        CheckDead();
 	}
 
     //If player is dead, we're going to end the game and bring up the menu
-    void checkDead() {
+    void CheckDead() {
         if (!player.activeSelf) {
             //Debug.Log("You're dead kiddo");
         }

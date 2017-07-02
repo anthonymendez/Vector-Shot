@@ -6,26 +6,26 @@ public class GameObjectPool : MonoBehaviour {
 
     public List<GameObject> pool;
 
-    public GameObject Prefab;
+    public GameObject prefab;
 
 	// Use this for initialization
 	void Start () {
         pool = new List<GameObject>();
 	}
 
-    public GameObject getGameObject() {
+    public GameObject GetGameObject() {
         if (pool.Count > 0) {
             GameObject GObj = pool[0];
             GObj.SetActive(true);
             pool.RemoveAt(0);
             return GObj;
         } else {
-            GameObject GObj = Instantiate<GameObject>(Prefab);
+            GameObject GObj = Instantiate<GameObject>(prefab);
             return GObj;
         }
     }
 
-    public void addGameObject(GameObject GObj) {
+    public void AddGameObject(GameObject GObj) {
         pool.Add(GObj);
         GObj.SetActive(false);
         GObj.transform.parent = transform;
