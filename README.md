@@ -19,11 +19,11 @@ Don't get hit, or else you'll have to start over.
 
 ### About this game
 
-I set out to make and finish a game rather than prototype a mechanic by trying it out and never finishing it. I originally was going to make a Gradius 3 type clone but put that on hold and tried out this Game Jam.
+A 2D Game made with Unity Personal.
 
-I only attempted this Game Jam because I want to start getting into the habit of finishing short games.
+I set out to make and finish a game rather than prototype a mechanic by trying it out and never finishing it. I originally was going to make a Gradius 3 type clone but put that on hold and tried out this Game Jam. I only attempted this Game Jam because I want to start getting into the habit of finishing short games.
 
-I intended to make this game difficult because I wanted to make getting a time under 1 minute to be difficult. 
+This game is meant to be challenging but at the same time fun. It is definitely possible to finish within a minute.
 
 ### Can I use your game's code?
 
