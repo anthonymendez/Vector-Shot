@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
     public float moveSpeed;
     public float rotateSpeed;
     public float shotDelay;
+    public bool isSpaceLike;
     
     private float timeSinceLastShot;
     private int lasersShot;
@@ -35,12 +36,34 @@ public class Player : MonoBehaviour {
     void TrackInput() {
         //Get X and Y movements
         float x = Input.GetAxis("Horizontal"), y = Input.GetAxis("Vertical");
-        //Move the player with our specified input
         Transform tempTrans = transform;
-        tempTrans.Translate(new Vector3(0f, y, 0f) * moveSpeed / Variables.speedDampener);
-        float zRot = transform.rotation.eulerAngles.z;
-        physics.MovePosition(tempTrans.position);
-        physics.MoveRotation(zRot - x * rotateSpeed / Variables.speedDampener);   
+        if (isSpaceLike) {
+            //Vertical to move back and forth
+            //Horizontal to move left and right
+            tempTrans.Translate(new Vector3(0f, y, 0f) * moveSpeed / Variables.speedDampener);
+            float zRot = transform.rotation.eulerAngles.z;
+            physics.MovePosition(tempTrans.position);
+            physics.MoveRotation(zRot - x * rotateSpeed / Variables.speedDampener);
+        } else {
+            //Vertical and Horizontal to move in all directions
+            Vector2 movement = new Vector2(x,y);
+            //Set rotation to 0 so we move relative to camera
+            tempTrans.rotation = Quaternion.Euler(0f, 0f, 0f);
+            tempTrans.Translate(movement * moveSpeed / Variables.speedDampener);
+
+            physics.MovePosition(tempTrans.position);
+
+            //Mouse position to aim our ship
+            float cameraDistance = Variables.mainCamera.transform.position.y - transform.position.y;
+            Vector3 mousePosition = Input.mousePosition;
+            mousePosition = Variables.mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cameraDistance));
+
+            float angleRadian = Mathf.Atan2(mousePosition.y - transform.position.y, mousePosition.x - transform.position.x);
+            float angleDegrees = Mathf.Rad2Deg * angleRadian;
+
+            transform.rotation = Quaternion.Euler(0f, 0f, angleDegrees-90);
+        }
+
         TrackShooting();
     }
 

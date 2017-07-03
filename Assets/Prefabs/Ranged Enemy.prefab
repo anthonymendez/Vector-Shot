@@ -102,9 +102,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc06a0a02f8c49a4697d5759044020ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLOSDistance: 15
-  moveSpeed: 0
-  shotDelay: 3
+  maxLOSDistance: 25
+  moveSpeed: 10
+  shotDelay: 2
 --- !u!212 &212279919935651886
 SpriteRenderer:
   m_ObjectHideFlags: 1
