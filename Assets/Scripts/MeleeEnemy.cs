@@ -14,8 +14,8 @@ public class MeleeEnemy : MonoBehaviour {
     Vector3 lastSeenPlayer;
     Vector3 smoothVelocity;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         
     }
 

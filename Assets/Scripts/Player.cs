@@ -13,18 +13,18 @@ public class Player : MonoBehaviour {
     private GameObjectPool laserPool;
     private Rigidbody2D physics;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         lasersShot = 0;
         timeSinceLastShot = 0;
         laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
         physics = GetComponent<Rigidbody2D>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+    
+    // Update is called once per frame
+    void Update () {
         
-	}
+    }
 
     void FixedUpdate() {
         TrackInput();

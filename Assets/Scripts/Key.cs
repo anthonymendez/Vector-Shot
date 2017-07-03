@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class Key : MonoBehaviour {
 
+    public GameObject[] ignoreCollisions;
+
     GameObjectPool keyPool;
 
     private void Start() {
         keyPool = GameObject.FindWithTag("KeyPool").GetComponent<GameObjectPool>();
+
+        foreach (GameObject gObj in ignoreCollisions) {
+
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision) {

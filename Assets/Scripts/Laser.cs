@@ -16,21 +16,21 @@ public class Laser : MonoBehaviour {
         physics = GetComponent<Rigidbody2D>();
     }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
         meleeEnemyPool = GameObject.FindWithTag("MEnemyPool").GetComponent<GameObjectPool>();
         rangedEnemyPool = GameObject.FindWithTag("REnemyPool").GetComponent<GameObjectPool>();
         physics = GetComponent<Rigidbody2D>();
     }
-	
-	// Update is called once per frame
-	void Update () {
+    
+    // Update is called once per frame
+    void Update () {
         //Much better way of calculating movement
         Transform temp = transform;
         temp.Translate(new Vector3(0f,1f,0f)*moveSpeed/Variables.speedDampener);
         physics.MovePosition(temp.position);
-	}
+    }
 
     void OnCollisionEnter2D(Collision2D collision) {
         string tag = collision.gameObject.tag;

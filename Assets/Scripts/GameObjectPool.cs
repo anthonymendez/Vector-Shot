@@ -8,10 +8,10 @@ public class GameObjectPool : MonoBehaviour {
 
     public GameObject prefab;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         pool = new List<GameObject>();
-	}
+    }
 
     public GameObject GetGameObject() {
         if (pool.Count > 0) {
