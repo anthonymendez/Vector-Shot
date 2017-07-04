@@ -8,13 +8,16 @@ public class Cam : MonoBehaviour {
 
     Vector3 offset;
     Vector3 velocity;
-    
+
+    DeadMenu deadMenu;
 
     // Use this for initialization
     void Start () {
         player = GameObject.FindWithTag("Player");
         offset = transform.position - player.transform.position;
         velocity = Vector3.zero;
+        deadMenu = GameObject.FindWithTag("DeadMenu").GetComponent<DeadMenu>();
+        deadMenu.gameObject.SetActive(false);
     }
 
     void Update() {
@@ -29,8 +32,14 @@ public class Cam : MonoBehaviour {
 
     //If player is dead, we're going to end the game and bring up the menu
     void CheckDead() {
-        if (!player.activeSelf) {
-            //Debug.Log("You're dead kiddo");
+        //If the player is dead...
+        if (isDead()) {
+            deadMenu.gameObject.SetActive(true);
+            Time.timeScale = 0;
         }
+    }
+
+    public bool isDead() {
+        return !player.activeSelf;
     }
 }

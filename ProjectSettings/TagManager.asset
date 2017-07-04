@@ -15,6 +15,17 @@ TagManager:
   - MEnemyPool
   - Key
   - KeyPool
+  - PauseMenu
+  - DeadMenu
+  - Options
+  - Restart
+  - Exit
+  - Continue
+  - OptionsMenu
+  - Optionsexit
+  - SFXVol
+  - MUSVol
+  - FloatyControls
   layers:
   - Default
   - TransparentFX

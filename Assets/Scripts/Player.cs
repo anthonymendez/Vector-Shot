@@ -8,11 +8,13 @@ public class Player : MonoBehaviour {
     public float rotateSpeed;
     public float shotDelay;
     public bool isSpaceLike;
-    
-    private float timeSinceLastShot;
-    private int lasersShot;
-    private GameObjectPool laserPool;
-    private Rigidbody2D physics;
+    public bool isPaused;
+
+    float timeSinceLastShot;
+    int lasersShot;
+    GameObjectPool laserPool;
+    Rigidbody2D physics;
+    PauseMenu pauseMenu;
 
     // Use this for initialization
     void Start () {
@@ -20,6 +22,8 @@ public class Player : MonoBehaviour {
         timeSinceLastShot = 0;
         laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
         physics = GetComponent<Rigidbody2D>();
+        isPaused = false;
+        pauseMenu = GameObject.FindWithTag("PauseMenu").GetComponent<PauseMenu>();
     }
     
     // Update is called once per frame
@@ -63,7 +67,7 @@ public class Player : MonoBehaviour {
 
             transform.rotation = Quaternion.Euler(0f, 0f, angleDegrees-90);
         }
-
+        TrackGamePause();
         TrackShooting();
     }
 
@@ -76,6 +80,41 @@ public class Player : MonoBehaviour {
             //We're going to edit the position of the shot here so it's right in front our player
             shot.transform.position = transform.position;
             shot.transform.Translate(0f,2.5f,0f);
+        }
+    }
+
+    public void TrackGamePause() {
+        //If the game is paused...
+        if (isPaused) {
+            //Was the escape key pressed?
+            isPaused = Input.GetButton("Cancel");
+
+            //If so, we set isPaused to false because no we're going to close it.
+            //If not, we're going to keep it open.
+            if (isPaused)
+                isPaused = false;
+            else
+                isPaused = true;
+
+        //If the game is not paused...
+        } else {
+            //Was the escape key pressed?
+            isPaused = Input.GetButton("Cancel");
+
+            //If so, we set isPaused to true because we're going to open it.
+            //If not, we're going to keep it closed.
+            if (isPaused)
+                isPaused = true;
+            else
+                isPaused = false;
+        }
+
+        if (isPaused) {
+            if(!pauseMenu.gameObject.activeSelf)
+                pauseMenu.gameObject.SetActive(true);
+        } else {
+            if (pauseMenu.gameObject.activeSelf)
+                pauseMenu.gameObject.SetActive(false);
         }
     }
 

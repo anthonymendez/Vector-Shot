@@ -80,11 +80,11 @@ public class RangedEnemy : MonoBehaviour {
         }
 
         if (player.GetComponent<Player>().isSpaceLike) {
-            maxLOSDistance = 25f;
+            maxLOSDistance = 30f;
             moveSpeed = 10;
             shotDelay = 2;
         } else {
-            maxLOSDistance = 15;
+            maxLOSDistance = 20;
             moveSpeed = 0;
             shotDelay = 3;
         }
