@@ -17,6 +17,10 @@ public class RangedEnemy : MonoBehaviour {
     Vector3 lastSeenPlayer;
     Vector3 smoothVelocity;
 
+    private void Start() {
+        
+    }
+
     // Update is called once per frame
     void Update () {
         MakeSureStuffIsInitialized();
@@ -73,6 +77,16 @@ public class RangedEnemy : MonoBehaviour {
 
         if (laserPool == null) {
             laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
+        }
+
+        if (player.GetComponent<Player>().isSpaceLike) {
+            maxLOSDistance = 25f;
+            moveSpeed = 10;
+            shotDelay = 2;
+        } else {
+            maxLOSDistance = 15;
+            moveSpeed = 0;
+            shotDelay = 3;
         }
     }
 

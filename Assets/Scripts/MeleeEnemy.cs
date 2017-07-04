@@ -69,6 +69,14 @@ public class MeleeEnemy : MonoBehaviour {
         if (smoothVelocity == null) {
             smoothVelocity = Vector3.zero;
         }
+
+        if (player.GetComponent<Player>().isSpaceLike) {
+            maxLOSDistance = 30f;
+            moveSpeed = 30f;
+        } else {
+            maxLOSDistance = 20f;
+            moveSpeed = 20;
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
