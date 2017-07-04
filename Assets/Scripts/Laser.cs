@@ -41,7 +41,7 @@ public class Laser : MonoBehaviour {
         }
 
         if (collision.gameObject.CompareTag("LaserShot")) {
-            laserPool.AddGameObject(this.gameObject);
+            //laserPool.AddGameObject(this.gameObject);
             //For any other object that isn't a wall, 
             //we destroy the object since everything in this game 
             //is 1 a hit kill
