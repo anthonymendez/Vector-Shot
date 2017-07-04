@@ -23,7 +23,7 @@ public class Cam : MonoBehaviour {
 
     // Updates regardless of Framerate
     void FixedUpdate () {
-        transform.position = Vector3.SmoothDamp(transform.position,player.transform.position,ref velocity,0.25f, 50.0f, Time.deltaTime);
+        transform.position = Vector3.SmoothDamp(transform.position,player.transform.position,ref velocity,0.10f, 75.0f, Time.deltaTime);
         transform.position = new Vector3(transform.position.x, transform.position.y, -10f);
     }
 
