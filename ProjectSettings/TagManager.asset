@@ -36,10 +36,10 @@ TagManager:
   - 
   - 
   - Background
-  - Player
-  - Enemies
-  - Keys
+  - LiveGameObjects
   - 
+  - Keys
+  - Lights
   - 
   - 
   - 

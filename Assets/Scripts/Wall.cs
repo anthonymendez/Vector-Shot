@@ -25,6 +25,7 @@ public class Wall : MonoBehaviour {
         childPhysics = childPrefab.AddComponent<Rigidbody2D>();
         childPrefab.transform.position = transform.position;
         childPrefab.tag = "Wall";
+        childPrefab.layer = gameObject.layer;
         childSprite.sprite = sprite.sprite;
         childPhysics.isKinematic = true;
         childPhysics.useFullKinematicContacts = true;
