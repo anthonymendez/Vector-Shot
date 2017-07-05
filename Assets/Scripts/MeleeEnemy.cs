@@ -70,7 +70,7 @@ public class MeleeEnemy : MonoBehaviour {
             smoothVelocity = Vector3.zero;
         }
 
-        if (player.GetComponent<Player>().isSpaceLike) {
+        if (!player.GetComponent<Player>().isSpaceLike) {
             maxLOSDistance = 30f;
             moveSpeed = 30f;
         } else {

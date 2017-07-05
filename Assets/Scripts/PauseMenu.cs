@@ -23,7 +23,7 @@ public class PauseMenu : MonoBehaviour {
     }
 
     void OptionsMenu() {
-        optMenu.OptionsMenu();
+        optMenu.gameObject.SetActive(true);
     }
 
     public void Pause() {

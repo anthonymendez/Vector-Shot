@@ -79,7 +79,7 @@ public class RangedEnemy : MonoBehaviour {
             laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
         }
 
-        if (player.GetComponent<Player>().isSpaceLike) {
+        if (!player.GetComponent<Player>().isSpaceLike) {
             maxLOSDistance = 30f;
             moveSpeed = 10;
             shotDelay = 2;
