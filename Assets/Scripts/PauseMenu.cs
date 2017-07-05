@@ -14,21 +14,20 @@ public class PauseMenu : MonoBehaviour {
 
     void Start() {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
-        
-        cont.onClick.AddListener(PauseOrUnpause);
-        
-        options.onClick.AddListener(OptionsMenu);
-        
 
+        cont.onClick.AddListener(Pause);
+
+        options.onClick.AddListener(OptionsMenu);
+
+        gameObject.SetActive(false);
     }
 
     void OptionsMenu() {
         optMenu.OptionsMenu();
     }
 
-    void PauseOrUnpause() {
-        player.isPaused = true;
-        player.TrackGamePause();
+    public void Pause() {
+        player.Pause();
     }
     
 }

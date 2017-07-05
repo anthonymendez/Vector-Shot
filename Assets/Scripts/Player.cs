@@ -67,7 +67,7 @@ public class Player : MonoBehaviour {
 
             transform.rotation = Quaternion.Euler(0f, 0f, angleDegrees-90);
         }
-        TrackGamePause();
+        TrackPausing();
         TrackShooting();
     }
 
@@ -83,38 +83,22 @@ public class Player : MonoBehaviour {
         }
     }
 
-    public void TrackGamePause() {
-        //If the game is paused...
-        if (isPaused) {
-            //Was the escape key pressed?
-            isPaused = Input.GetButton("Cancel");
-
-            //If so, we set isPaused to false because no we're going to close it.
-            //If not, we're going to keep it open.
-            if (isPaused)
-                isPaused = false;
-            else
-                isPaused = true;
-
-        //If the game is not paused...
-        } else {
-            //Was the escape key pressed?
-            isPaused = Input.GetButton("Cancel");
-
-            //If so, we set isPaused to true because we're going to open it.
-            //If not, we're going to keep it closed.
-            if (isPaused)
-                isPaused = true;
-            else
-                isPaused = false;
+    void TrackPausing() {
+        bool pauseKey = Input.GetButtonDown("Cancel");
+        if (pauseKey) {
+            Pause();
         }
+    }
 
+    public void Pause() {
         if (isPaused) {
-            if(!pauseMenu.gameObject.activeSelf)
-                pauseMenu.gameObject.SetActive(true);
+            isPaused = false;
+            pauseMenu.gameObject.SetActive(false);
+            Time.timeScale = 1;
         } else {
-            if (pauseMenu.gameObject.activeSelf)
-                pauseMenu.gameObject.SetActive(false);
+            isPaused = true;
+            pauseMenu.gameObject.SetActive(true);
+            Time.timeScale = 0;
         }
     }
 
