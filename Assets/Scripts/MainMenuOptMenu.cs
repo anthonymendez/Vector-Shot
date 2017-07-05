@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OptMenu : MonoBehaviour {
+public class MainMenuOptMenu : MonoBehaviour {
 
     public Button exitOptions;
 
@@ -13,24 +13,19 @@ public class OptMenu : MonoBehaviour {
 
     AudioSource musAS;
 
-    Player player;
-
     // Use this for initialization
     void Start () {
-        player = GameObject.FindWithTag("Player").GetComponent<Player>();
 
         //Options Menu Stuff
-        
-        musAS = GameObject.FindWithTag("Background").GetComponent<AudioSource>();
         musVol.onValueChanged.AddListener(this.UpdateMusicVolumeFromSlider);
-        
+
+        sfxVol.onValueChanged.AddListener(this.UpdateSFXVolumeFromSlider);
+
         floatyControls.onValueChanged.AddListener(updateControllerScheme);
 
         exitOptions.onClick.AddListener(OptionsMenu);
 
         //Settings values already set
-        musVol.value = Variables.musicVolume;
-        musAS.volume = Variables.musicVolume;
         floatyControls.isOn = Variables.isSpaceLike;
 
         gameObject.SetActive(false);
@@ -46,15 +41,14 @@ public class OptMenu : MonoBehaviour {
 	}
 
     public void UpdateMusicVolumeFromSlider(float volume) {
-        musAS.volume = volume;
+        Variables.musicVolume = volume;
     }
 
     public void UpdateSFXVolumeFromSlider(float volume) {
-        //TODO
+        Variables.sfxVolume = volume;
     }
 
     public void updateControllerScheme(bool isSpaceLike) {
-        player.isSpaceLike = isSpaceLike;
         Variables.isSpaceLike = isSpaceLike;
     }
 }

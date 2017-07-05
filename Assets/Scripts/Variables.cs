@@ -13,6 +13,9 @@ public class Variables {
     public static int keysObtained = 0;
     //Control Schemes
     public static bool isSpaceLike = false;
+    //Music and SFX Volume
+    public static float musicVolume = 1;
+    public static float sfxVolume = 1;
 
     public static void Restart() {
         score = 0;
