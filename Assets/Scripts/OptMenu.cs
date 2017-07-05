@@ -28,6 +28,10 @@ public class OptMenu : MonoBehaviour {
 
         exitOptions.onClick.AddListener(OptionsMenu);
 
+        //Settings values already set
+        musVol.value = musAS.volume;
+        floatyControls.isOn = Variables.isSpaceLike;
+
         gameObject.SetActive(false);
     }
 
@@ -50,5 +54,6 @@ public class OptMenu : MonoBehaviour {
 
     public void updateControllerScheme(bool isSpaceLike) {
         player.isSpaceLike = isSpaceLike;
+        Variables.isSpaceLike = isSpaceLike;
     }
 }

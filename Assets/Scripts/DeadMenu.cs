@@ -19,6 +19,7 @@ public class DeadMenu : MonoBehaviour {
         options.onClick.AddListener(OptionsMenu);
 
         exit = GameObject.FindWithTag("Exit").GetComponent<Button>();
+
         
     }
 

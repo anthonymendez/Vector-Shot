@@ -11,6 +11,8 @@ public class Variables {
     public static int score = 0;
     //Track Keys obtained
     public static int keysObtained = 0;
+    //Control Schemes
+    public static bool isSpaceLike = false;
 
     public static void Restart() {
         score = 0;
