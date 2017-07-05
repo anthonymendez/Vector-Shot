@@ -11,6 +11,8 @@ public class Cam : MonoBehaviour {
 
     DeadMenu deadMenu;
 
+    bool checkDied;
+
     // Use this for initialization
     void Start () {
         player = GameObject.FindWithTag("Player");
@@ -18,6 +20,7 @@ public class Cam : MonoBehaviour {
         velocity = Vector3.zero;
         deadMenu = GameObject.FindWithTag("DeadMenu").GetComponent<DeadMenu>();
         deadMenu.gameObject.SetActive(false);
+        checkDied = false;
     }
 
     void Update() {
@@ -33,9 +36,10 @@ public class Cam : MonoBehaviour {
     //If player is dead, we're going to end the game and bring up the menu
     void CheckDead() {
         //If the player is dead...
-        if (isDead()) {
+        if (isDead() && !checkDied) {
             deadMenu.gameObject.SetActive(true);
             Time.timeScale = 0;
+            checkDied = true;
         }
     }
 

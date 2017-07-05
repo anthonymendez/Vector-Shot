@@ -15,6 +15,7 @@ public class Player : MonoBehaviour {
     GameObjectPool laserPool;
     Rigidbody2D physics;
     PauseMenu pauseMenu;
+    Camera mainCamera;
 
     // Use this for initialization
     void Start () {
@@ -24,6 +25,9 @@ public class Player : MonoBehaviour {
         physics = GetComponent<Rigidbody2D>();
         isPaused = false;
         pauseMenu = GameObject.FindWithTag("PauseMenu").GetComponent<PauseMenu>();
+        mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+        Time.timeScale = 1;
+        
     }
     
     // Update is called once per frame
@@ -58,9 +62,9 @@ public class Player : MonoBehaviour {
             physics.MovePosition(tempTrans.position);
 
             //Mouse position to aim our ship
-            float cameraDistance = Variables.mainCamera.transform.position.y - transform.position.y;
+            float cameraDistance = mainCamera.transform.position.y - transform.position.y;
             Vector3 mousePosition = Input.mousePosition;
-            mousePosition = Variables.mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cameraDistance));
+            mousePosition = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cameraDistance));
 
             float angleRadian = Mathf.Atan2(mousePosition.y - transform.position.y, mousePosition.x - transform.position.x);
             float angleDegrees = Mathf.Rad2Deg * angleRadian;

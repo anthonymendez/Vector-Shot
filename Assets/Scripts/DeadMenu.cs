@@ -22,13 +22,16 @@ public class DeadMenu : MonoBehaviour {
         
     }
 
-    //Restart Methods
+    //Restart Method
     void RestartGame() {
+        Variables.score = 0;
+        Variables.keysObtained = 0;
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     void OptionsMenu() {
-        optMenu.OptionsMenu();
+        optMenu.gameObject.SetActive(true);
     }
 
 }
