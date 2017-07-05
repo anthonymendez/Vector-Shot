@@ -619,6 +619,10 @@ Prefab:
       propertyPath: m_AnchoredPosition.y
       value: -144.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1420989010329224, guid: 890d081776bf82d4dad315b104492485, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114922701708887464, guid: 890d081776bf82d4dad315b104492485, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 890d081776bf82d4dad315b104492485, type: 2}
@@ -1021,6 +1025,7 @@ MonoBehaviour:
   credits: {fileID: 123136}
   exit: {fileID: 186924601}
   optionsMenu: {fileID: 1394529366}
+  creditsMenu: {fileID: 0}
 --- !u!114 &663485352 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114233358779889518, guid: 890d081776bf82d4dad315b104492485,
