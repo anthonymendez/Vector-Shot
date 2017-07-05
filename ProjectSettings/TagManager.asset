@@ -26,6 +26,8 @@ TagManager:
   - SFXVol
   - MUSVol
   - FloatyControls
+  - Asteroids
+  - Stars
   layers:
   - Default
   - TransparentFX
