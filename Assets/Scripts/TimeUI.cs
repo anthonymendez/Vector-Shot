@@ -19,7 +19,7 @@ public class TimeUI : MonoBehaviour {
 	void Update () {
         if (!mainCamera.isDead()) {
             timeInSeconds += Time.deltaTime;
-            text.text = string.Format("{0:0.00} :Time", timeInSeconds);
+            text.text = string.Format("{0:0.00} Time", timeInSeconds);
         }
     }
 }

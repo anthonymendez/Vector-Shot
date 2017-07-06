@@ -3,19 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LaserUI : MonoBehaviour {
+public class KeysUI : MonoBehaviour {
 
     Text text;
 
-    Player player;
-
 	void Start () {
         text = GetComponent<Text>();
-        player = GameObject.FindWithTag("Player").GetComponent<Player>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        text.text = string.Format("Lasers {0}",player.shotsAvailable);
+        text.text = string.Format("{0}/8 Keys", Variables.keysObtained);
 	}
 }

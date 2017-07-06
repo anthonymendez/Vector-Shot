@@ -21,6 +21,10 @@ public class Key : MonoBehaviour {
             Variables.score += 50;
             Variables.keysObtained++;
             keyPool.AddGameObject(gameObject);
+
+            if(Variables.keysObtained == 8) {
+
+            }
         }
     }
 }
