@@ -8,12 +8,14 @@ public class Laser : MonoBehaviour {
     public bool isFriendly;
 
     GameObjectPool laserPool, meleeEnemyPool, rangedEnemyPool;
+    Player player;
     Rigidbody2D physics;
 
     void Awake() {
         laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
         meleeEnemyPool = GameObject.FindWithTag("MEnemyPool").GetComponent<GameObjectPool>();
         rangedEnemyPool = GameObject.FindWithTag("REnemyPool").GetComponent<GameObjectPool>();
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
         physics = GetComponent<Rigidbody2D>();
     }
 
@@ -40,18 +42,18 @@ public class Laser : MonoBehaviour {
             laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
         }
 
-        if (collision.gameObject.CompareTag("LaserShot")) {
-            //laserPool.AddGameObject(this.gameObject);
-            //For any other object that isn't a wall, 
-            //we destroy the object since everything in this game 
-            //is 1 a hit kill
-        } else if (collision.gameObject.CompareTag("Wall")) {
+        if (collision.gameObject.CompareTag("Wall")) {
+            if (isFriendly) {
+                player.shotsAvailable++;
+            }
             laserPool.AddGameObject(gameObject);
         } else if (collision.gameObject.CompareTag("REnemy") && isFriendly) {
+            player.shotsAvailable++;
             rangedEnemyPool.AddGameObject(collision.gameObject);
             Variables.score += 10;
             laserPool.AddGameObject(gameObject);
         } else if (collision.gameObject.CompareTag("MEnemy") && isFriendly) {
+            player.shotsAvailable++;
             meleeEnemyPool.AddGameObject(collision.gameObject);
             Variables.score += 10;
             laserPool.AddGameObject(gameObject);

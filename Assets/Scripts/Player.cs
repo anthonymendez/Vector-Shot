@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
     public float shotDelay;
     public bool isSpaceLike;
     public bool isPaused;
+    public int shotsAvailable;
 
     float timeSinceLastShot;
     int lasersShot;
@@ -27,7 +28,6 @@ public class Player : MonoBehaviour {
         pauseMenu = GameObject.FindWithTag("PauseMenu").GetComponent<PauseMenu>();
         mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         Time.timeScale = 1;
-        
     }
     
     // Update is called once per frame
@@ -77,7 +77,7 @@ public class Player : MonoBehaviour {
 
     void TrackShooting() {
         bool isShooting = Input.GetButton("Fire1") || Input.GetButtonDown("Fire1");
-        if (isShooting && timeSinceLastShot >= shotDelay) {
+        if (isShooting && shotsAvailable > 0 && timeSinceLastShot >= shotDelay) {
             timeSinceLastShot = 0;
             GameObject shot = laserPool.GetGameObject();
             shot.transform.rotation = transform.rotation;
@@ -85,6 +85,7 @@ public class Player : MonoBehaviour {
             shot.transform.position = transform.position;
             shot.GetComponent<Laser>().isFriendly = true;
             shot.transform.Translate(0f,2.5f,0f);
+            shotsAvailable--;
         }
     }
 

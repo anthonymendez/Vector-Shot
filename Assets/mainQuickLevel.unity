@@ -4100,6 +4100,7 @@ MonoBehaviour:
   shotDelay: 0.25
   isSpaceLike: 0
   isPaused: 0
+  shotsAvailable: 3
 --- !u!212 &987813063
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5115,7 +5116,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1349632244
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8369,7 +8370,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1420989010329224, guid: 890d081776bf82d4dad315b104492485, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 890d081776bf82d4dad315b104492485, type: 2}
