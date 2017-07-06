@@ -5,6 +5,7 @@ using UnityEngine;
 public class Laser : MonoBehaviour {
 
     public float moveSpeed;
+    public bool isFriendly;
 
     GameObjectPool laserPool, meleeEnemyPool, rangedEnemyPool;
     Rigidbody2D physics;
@@ -26,9 +27,13 @@ public class Laser : MonoBehaviour {
     
     // Update is called once per frame
     void Update () {
+        
+    }
+
+    void FixedUpdate() {
         //Much better way of calculating movement
         Transform temp = transform;
-        temp.Translate(new Vector3(0f,1f,0f)*moveSpeed/Variables.speedDampener);
+        temp.Translate(new Vector3(0f, 1f, 0f) * moveSpeed / Variables.speedDampener);
         physics.MovePosition(temp.position);
     }
 
@@ -47,15 +52,15 @@ public class Laser : MonoBehaviour {
             //is 1 a hit kill
         } else if (collision.gameObject.CompareTag("Wall")) {
             laserPool.AddGameObject(gameObject);
-        } else if (collision.gameObject.CompareTag("REnemy")) {
+        } else if (collision.gameObject.CompareTag("REnemy") && isFriendly) {
             rangedEnemyPool.AddGameObject(collision.gameObject);
             Variables.score += 10;
             laserPool.AddGameObject(gameObject);
-        } else if (collision.gameObject.CompareTag("MEnemy")) {
+        } else if (collision.gameObject.CompareTag("MEnemy") && isFriendly) {
             meleeEnemyPool.AddGameObject(collision.gameObject);
             Variables.score += 10;
             laserPool.AddGameObject(gameObject);
-        } else if (collision.gameObject.CompareTag("Player")) {
+        } else if (collision.gameObject.CompareTag("Player") && !isFriendly) {
             collision.gameObject.SetActive(false);
             laserPool.AddGameObject(gameObject);
         }
