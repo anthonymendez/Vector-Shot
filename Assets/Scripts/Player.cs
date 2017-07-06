@@ -83,6 +83,7 @@ public class Player : MonoBehaviour {
             shot.transform.rotation = transform.rotation;
             //We're going to edit the position of the shot here so it's right in front our player
             shot.transform.position = transform.position;
+            shot.GetComponent<Laser>().isFriendly = true;
             shot.transform.Translate(0f,2.5f,0f);
         }
     }

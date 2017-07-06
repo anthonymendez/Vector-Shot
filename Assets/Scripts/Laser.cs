@@ -24,11 +24,6 @@ public class Laser : MonoBehaviour {
         rangedEnemyPool = GameObject.FindWithTag("REnemyPool").GetComponent<GameObjectPool>();
         physics = GetComponent<Rigidbody2D>();
     }
-    
-    // Update is called once per frame
-    void Update () {
-        
-    }
 
     void FixedUpdate() {
         //Much better way of calculating movement
