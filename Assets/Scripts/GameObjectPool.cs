@@ -47,7 +47,7 @@ public class GameObjectPool : MonoBehaviour {
     void PlayerLaserAmountController(GameObject GObj) {
         if (GObj.CompareTag("LaserShot")) {
             Laser las = GObj.GetComponent<Laser>();
-            if (las.isFriendly) {
+            if (las.isFriendly && player.shotsAvailable < player.shotsOnMap) {
                 player.shotsAvailable++;
             }
         }
