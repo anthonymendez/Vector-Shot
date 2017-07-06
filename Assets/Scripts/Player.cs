@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
     public float shotDelay;
     public bool isSpaceLike;
     public bool isPaused;
+    public int shotsOnMap;
     public int shotsAvailable;
 
     float timeSinceLastShot;
@@ -16,10 +17,14 @@ public class Player : MonoBehaviour {
     GameObjectPool laserPool;
     Rigidbody2D physics;
     PauseMenu pauseMenu;
+    GameObject activeShots;
     Camera mainCamera;
+    
 
     // Use this for initialization
     void Start () {
+        activeShots = GameObject.FindWithTag("ActiveLaser");
+        shotsAvailable = shotsOnMap;
         lasersShot = 0;
         timeSinceLastShot = 0;
         laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
@@ -39,6 +44,7 @@ public class Player : MonoBehaviour {
         TrackInput();
         //Keep track of our time since last shot through seconds
         timeSinceLastShot += Time.deltaTime;
+        
     }
 
     void TrackInput() {
@@ -85,6 +91,7 @@ public class Player : MonoBehaviour {
             shot.transform.position = transform.position;
             shot.GetComponent<Laser>().isFriendly = true;
             shot.transform.Translate(0f,2.5f,0f);
+            shot.transform.parent = activeShots.transform;
             shotsAvailable--;
         }
     }

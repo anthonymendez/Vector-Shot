@@ -41,19 +41,13 @@ public class Laser : MonoBehaviour {
         if (laserPool == null) {
             laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
         }
-
         if (collision.gameObject.CompareTag("Wall")) {
-            if (isFriendly) {
-                player.shotsAvailable++;
-            }
             laserPool.AddGameObject(gameObject);
         } else if (collision.gameObject.CompareTag("REnemy") && isFriendly) {
-            player.shotsAvailable++;
             rangedEnemyPool.AddGameObject(collision.gameObject);
             Variables.score += 10;
             laserPool.AddGameObject(gameObject);
         } else if (collision.gameObject.CompareTag("MEnemy") && isFriendly) {
-            player.shotsAvailable++;
             meleeEnemyPool.AddGameObject(collision.gameObject);
             Variables.score += 10;
             laserPool.AddGameObject(gameObject);

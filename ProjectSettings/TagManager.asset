@@ -28,6 +28,7 @@ TagManager:
   - FloatyControls
   - Asteroids
   - Stars
+  - ActiveLaser
   layers:
   - Default
   - TransparentFX
