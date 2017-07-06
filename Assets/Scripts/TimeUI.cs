@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class TimeUI : MonoBehaviour {
 
+    public float timeInSeconds;
+
     Text text;
-    float timeInSeconds;
     Cam mainCamera;
 	// Use this for initialization
 	void Start () {

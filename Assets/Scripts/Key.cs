@@ -6,6 +6,8 @@ public class Key : MonoBehaviour {
 
     public GameObject[] ignoreCollisions;
 
+    public GameObject WinMenu;
+
     GameObjectPool keyPool;
 
     private void Start() {
@@ -23,7 +25,8 @@ public class Key : MonoBehaviour {
             keyPool.AddGameObject(gameObject);
 
             if(Variables.keysObtained == 8) {
-
+                WinMenu.SetActive(true);
+                Time.timeScale = 0;
             }
         }
     }

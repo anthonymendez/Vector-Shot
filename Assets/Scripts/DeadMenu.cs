@@ -6,21 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class DeadMenu : MonoBehaviour {
 
-    Button restart, options, exit, exitOptions;
+    public Button restart, options, exit, exitOptions;
 
 
     public OptMenu optMenu;
 
     void Start() {
-        restart = GameObject.FindWithTag("Restart").GetComponent<Button>();
         restart.onClick.AddListener(RestartGame);
-
-        options = GameObject.FindWithTag("Options").GetComponent<Button>();
-        options.onClick.AddListener(OptionsMenu);
-
-        exit = GameObject.FindWithTag("Exit").GetComponent<Button>();
-
         
+        options.onClick.AddListener(OptionsMenu);
     }
 
     //Restart Method

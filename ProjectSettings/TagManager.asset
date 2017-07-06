@@ -29,6 +29,7 @@ TagManager:
   - Asteroids
   - Stars
   - ActiveLaser
+  - WinMenu
   layers:
   - Default
   - TransparentFX
