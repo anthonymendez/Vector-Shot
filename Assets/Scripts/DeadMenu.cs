@@ -11,10 +11,14 @@ public class DeadMenu : MonoBehaviour {
 
     public OptMenu optMenu;
 
+    public CreditsMenu credMenu;
+
     void Start() {
         restart.onClick.AddListener(RestartGame);
         
         options.onClick.AddListener(OptionsMenu);
+
+        exit.onClick.AddListener(Credits);
     }
 
     //Restart Method
@@ -27,6 +31,10 @@ public class DeadMenu : MonoBehaviour {
 
     void OptionsMenu() {
         optMenu.gameObject.SetActive(true);
+    }
+
+    void Credits() {
+        credMenu.gameObject.SetActive(true);
     }
 
 }

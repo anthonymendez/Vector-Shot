@@ -30,6 +30,7 @@ TagManager:
   - Stars
   - ActiveLaser
   - WinMenu
+  - Lights
   layers:
   - Default
   - TransparentFX

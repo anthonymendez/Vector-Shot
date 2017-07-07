@@ -50,7 +50,7 @@ public class OptMenu : MonoBehaviour {
     }
 
     public void UpdateSFXVolumeFromSlider(float volume) {
-        //TODO
+        
     }
 
     public void updateControllerScheme(bool isSpaceLike) {

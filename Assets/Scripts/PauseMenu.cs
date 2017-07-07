@@ -10,6 +10,8 @@ public class PauseMenu : MonoBehaviour {
 
     public OptMenu optMenu;
 
+    public CreditsMenu credMenu;
+
     Player player;
 
     void Start() {
@@ -18,6 +20,8 @@ public class PauseMenu : MonoBehaviour {
         cont.onClick.AddListener(Pause);
 
         options.onClick.AddListener(OptionsMenu);
+
+        exit.onClick.AddListener(Credits);
 
         gameObject.SetActive(false);
     }
@@ -28,6 +32,10 @@ public class PauseMenu : MonoBehaviour {
 
     public void Pause() {
         player.Pause();
+    }
+
+    void Credits() {
+        credMenu.gameObject.SetActive(true);
     }
     
 }

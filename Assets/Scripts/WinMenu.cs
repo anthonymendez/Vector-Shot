@@ -6,13 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class WinMenu : MonoBehaviour {
 
-    public Text TimeScore, GameScore, FinalScore, TimeUI;
+    public Text TimeScore, GameScore, FinalScore;
+    public TimeUI TimeUI;
 
     public Button restart, options, exit;
 
     public OptMenu optMenu;
 
-    int placeHolder;
+    public CreditsMenu credMenu;
+
+    float placeHolder;
 
     float TS, GS, FS;
 
@@ -22,15 +25,17 @@ public class WinMenu : MonoBehaviour {
 
         options.onClick.AddListener(OptionsMenu);
 
+        exit.onClick.AddListener(Credits);
+
         gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update() {
         //Calculate Timescore
-        placeHolder = int.Parse(TimeScore.text);
+        placeHolder = TimeUI.timeInSeconds;
         if(placeHolder >= 60) {
-            TimeScore.text = 60.ToString();
+            TimeScore.text = ""+60+"";
             TS = 60;
         } else {
             TimeScore.text = (1000f / placeHolder).ToString();
@@ -53,5 +58,9 @@ public class WinMenu : MonoBehaviour {
 
     void OptionsMenu() {
         optMenu.gameObject.SetActive(true);
+    }
+
+    void Credits() {
+        credMenu.gameObject.SetActive(true);
     }
 }

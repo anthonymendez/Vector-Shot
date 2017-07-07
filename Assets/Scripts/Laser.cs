@@ -10,8 +10,10 @@ public class Laser : MonoBehaviour {
     GameObjectPool laserPool, meleeEnemyPool, rangedEnemyPool;
     Player player;
     Rigidbody2D physics;
+    AudioSource shipExplosionSound;
 
     void Awake() {
+        shipExplosionSound = GetComponent<AudioSource>();
         laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
         meleeEnemyPool = GameObject.FindWithTag("MEnemyPool").GetComponent<GameObjectPool>();
         rangedEnemyPool = GameObject.FindWithTag("REnemyPool").GetComponent<GameObjectPool>();
@@ -45,13 +47,16 @@ public class Laser : MonoBehaviour {
             laserPool.AddGameObject(gameObject);
         } else if (collision.gameObject.CompareTag("REnemy") && isFriendly) {
             rangedEnemyPool.AddGameObject(collision.gameObject);
+            AudioSource.PlayClipAtPoint(shipExplosionSound.clip, transform.position);
             Variables.score += 10;
             laserPool.AddGameObject(gameObject);
         } else if (collision.gameObject.CompareTag("MEnemy") && isFriendly) {
             meleeEnemyPool.AddGameObject(collision.gameObject);
+            AudioSource.PlayClipAtPoint(shipExplosionSound.clip, transform.position);
             Variables.score += 10;
             laserPool.AddGameObject(gameObject);
         } else if (collision.gameObject.CompareTag("Player") && !isFriendly) {
+            AudioSource.PlayClipAtPoint(shipExplosionSound.clip, transform.position);
             collision.gameObject.SetActive(false);
             laserPool.AddGameObject(gameObject);
         }

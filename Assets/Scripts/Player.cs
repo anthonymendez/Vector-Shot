@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
     public float moveSpeed;
     public float rotateSpeed;
     public float shotDelay;
+    public float reloadTime;
     public bool isSpaceLike;
     public bool isPaused;
     public int shotsOnMap;
@@ -19,10 +20,16 @@ public class Player : MonoBehaviour {
     PauseMenu pauseMenu;
     GameObject activeShots;
     Camera mainCamera;
+    AudioSource laserShootSound, reloadSound;
+    bool isReloading;
+    float reloadingTime;
     
 
     // Use this for initialization
     void Start () {
+        reloadingTime = 0;
+        laserShootSound = GetComponents<AudioSource>()[0];
+        reloadSound = GetComponents<AudioSource>()[1];
         activeShots = GameObject.FindWithTag("ActiveLaser");
         shotsAvailable = shotsOnMap;
         lasersShot = 0;
@@ -82,17 +89,32 @@ public class Player : MonoBehaviour {
     }
 
     void TrackShooting() {
+        bool reloadKeyDown = Input.GetKeyDown(KeyCode.R);
+        if (reloadKeyDown) {
+            isReloading = true;
+            reloadSound.Play();
+            reloadingTime = 0;
+        }
+
         bool isShooting = Input.GetButton("Fire1") || Input.GetButtonDown("Fire1");
-        if (isShooting && shotsAvailable > 0 && timeSinceLastShot >= shotDelay) {
+        if (!isReloading && isShooting && shotsAvailable > 0 && timeSinceLastShot >= shotDelay) {
             timeSinceLastShot = 0;
             GameObject shot = laserPool.GetGameObject();
+            shot.GetComponent<Laser>().isFriendly = true;
             shot.transform.rotation = transform.rotation;
             //We're going to edit the position of the shot here so it's right in front our player
             shot.transform.position = transform.position;
-            shot.GetComponent<Laser>().isFriendly = true;
             shot.transform.Translate(0f,2.5f,0f);
             shot.transform.parent = activeShots.transform;
+            AudioSource.PlayClipAtPoint(laserShootSound.clip, transform.position);
             shotsAvailable--;
+        } else if (isReloading) {
+            if (reloadingTime > reloadTime) {
+                isReloading = false;
+                shotsAvailable = shotsOnMap;
+            } else {
+                reloadingTime += Time.deltaTime;
+            }
         }
     }
 

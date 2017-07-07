@@ -31,7 +31,6 @@ public class GameObjectPool : MonoBehaviour {
     public void AddGameObject(GameObject GObj) {
         pool.Add(GObj);
         GObj.SetActive(false);
-        PlayerLaserAmountController(GObj);
         GObj.transform.parent = transform;
     }
 
@@ -42,15 +41,6 @@ public class GameObjectPool : MonoBehaviour {
             pool.RemoveAt(0);
         }
         pool = null;
-    }
-
-    void PlayerLaserAmountController(GameObject GObj) {
-        if (GObj.CompareTag("LaserShot")) {
-            Laser las = GObj.GetComponent<Laser>();
-            if (las.isFriendly && player.shotsAvailable < player.shotsOnMap) {
-                player.shotsAvailable++;
-            }
-        }
     }
 
 }
