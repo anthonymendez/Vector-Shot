@@ -17,6 +17,7 @@ Don't get hit, or else you'll have to start over.
 |S| Move down | Move back |
 |A| Move left | Rotate Left |
 |D| Move right | Rotate Right |
+|R| Reload | Reload |
 |Ctrl| Shoot | Shoot |
 |Left-Click| Shoot | Shoot |
 
