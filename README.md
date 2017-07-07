@@ -2,28 +2,31 @@
 
 ## Submission for <a href = "https://itch.io/jam/fast-to-complete-games"> "Summer of Fast-to-Complete Games" </a> Game Jam
 
+## <a href = "https://tonythetiger.itch.io/vector-shot" > Play on Itch.io! </a>
+
 ### Game Objective
 
 The main objective of the game is to collect all 8 keys in the level without dying.
 Don't get hit, or else you'll have to start over.
 
-### Default Controls (subject to change before submission)
+### Controls
 
-| Key | Action |
-|-|--------------|
-|W| Move forward|
-|S| Move back|
-|A| Rotate left|
-|D| Rotate right|
-|Ctrl/Left-click| Shoot|
+| Key | Snappy Action (Default) | SpaceLike Action |
+|-|--------------|---------------------------------|
+|W| Move up | Move forward |
+|S| Move down | Move back |
+|A| Move left | Rotate Left |
+|D| Move right | Rotate Right |
+|Ctrl| Shoot | Shoot |
+|Left-Click| Shoot | Shoot |
 
 ### About this game
 
 A 2D Game made with Unity Personal.
 
-I set out to make and finish a game rather than prototype a mechanic by trying it out and never finishing it. I originally was going to make a Gradius 3 type clone but put that on hold and tried out this Game Jam. I only attempted this Game Jam because I want to start getting into the habit of finishing short games.
+I set out to make and finish a game rather than prototype a mechanic by trying it out and never finishing it. And so, with a week's worth of committment, Vector Shot was born. My first ever finished game that is playable
 
-This game is meant to be challenging but at the same time fun. It is definitely possible to finish within a minute.
+This game is meant to be challenging but at the same time fun.
 
 ### Can I use your game's code?
 
