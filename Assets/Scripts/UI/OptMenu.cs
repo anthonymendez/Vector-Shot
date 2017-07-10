@@ -11,12 +11,15 @@ public class OptMenu : MonoBehaviour {
     
     public Toggle floatyControls, lightingOn;
 
+    public GameObject lighting;
+
     AudioSource musAS;
 
     Player player;
-
+    
     // Use this for initialization
     void Start () {
+        
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
 
         //Options Menu Stuff
@@ -61,6 +64,6 @@ public class OptMenu : MonoBehaviour {
     }
 
     void Lights(bool isOn) {
-        GameObject.FindWithTag("Lights").SetActive(isOn);
+        lighting.SetActive(isOn);
     }
 }
