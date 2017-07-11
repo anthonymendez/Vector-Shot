@@ -9,8 +9,6 @@ public class Cam : MonoBehaviour {
     Vector3 offset;
     Vector3 velocity;
 
-    DeadMenu deadMenu;
-
     bool checkDied;
 
     // Use this for initialization
@@ -18,7 +16,6 @@ public class Cam : MonoBehaviour {
         player = GameObject.FindWithTag("Player");
         offset = transform.position - player.transform.position;
         velocity = Vector3.zero;
-        deadMenu = GameObject.FindWithTag("DeadMenu").GetComponent<DeadMenu>();
         deadMenu.gameObject.SetActive(false);
         checkDied = false;
     }
