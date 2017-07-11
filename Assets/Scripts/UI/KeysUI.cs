@@ -13,6 +13,6 @@ public class KeysUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        text.text = string.Format("{0}/8 Keys", Variables.keysObtained);
+        text.text = string.Format(" Keys {0}/8", Variables.keysObtained);
 	}
 }

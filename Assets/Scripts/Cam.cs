@@ -16,7 +16,6 @@ public class Cam : MonoBehaviour {
         player = GameObject.FindWithTag("Player");
         offset = transform.position - player.transform.position;
         velocity = Vector3.zero;
-        deadMenu.gameObject.SetActive(false);
         checkDied = false;
     }
 
@@ -34,7 +33,6 @@ public class Cam : MonoBehaviour {
     void CheckDead() {
         //If the player is dead...
         if (isDead() && !checkDied) {
-            deadMenu.gameObject.SetActive(true);
             Time.timeScale = 0;
             checkDied = true;
         }

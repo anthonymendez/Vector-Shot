@@ -13,6 +13,6 @@ public class ScoreUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        text.text = string.Format("Score {0}",Variables.score);
+        text.text = string.Format(" Score {0}",Variables.score);
 	}
 }

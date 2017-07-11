@@ -17,7 +17,7 @@ public class PauseMenu : MonoBehaviour {
     void Start() {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
 
-        cont.onClick.AddListener(Pause);
+//        cont.onClick.AddListener(Pause);
 
         options.onClick.AddListener(OptionsMenu);
 
@@ -29,10 +29,10 @@ public class PauseMenu : MonoBehaviour {
     void OptionsMenu() {
         optMenu.gameObject.SetActive(true);
     }
-
+    /*
     public void Pause() {
         player.Pause();
-    }
+    }*/
 
     void Credits() {
         credMenu.gameObject.SetActive(true);

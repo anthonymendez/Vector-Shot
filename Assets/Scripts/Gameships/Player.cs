@@ -9,7 +9,6 @@ public class Player : MonoBehaviour {
     public float shotDelay;
     public float reloadTime;
     public bool isSpaceLike;
-    public bool isPaused;
     public int shotsOnMap;
     public int shotsAvailable;
 
@@ -17,7 +16,6 @@ public class Player : MonoBehaviour {
     int lasersShot;
     GameObjectPool laserPool;
     Rigidbody2D physics;
-    PauseMenu pauseMenu;
     GameObject activeShots;
     Camera mainCamera;
     AudioSource laserShootSound, reloadSound;
@@ -36,8 +34,6 @@ public class Player : MonoBehaviour {
         timeSinceLastShot = 0;
         laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
         physics = GetComponent<Rigidbody2D>();
-        isPaused = false;
-        pauseMenu = GameObject.FindWithTag("PauseMenu").GetComponent<PauseMenu>();
         mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         Time.timeScale = 1;
     }
@@ -84,7 +80,6 @@ public class Player : MonoBehaviour {
 
             transform.rotation = Quaternion.Euler(0f, 0f, angleDegrees-90);
         }
-        TrackPausing();
         TrackShooting();
     }
 
@@ -106,7 +101,7 @@ public class Player : MonoBehaviour {
             shot.transform.position = transform.position;
             shot.transform.Translate(0f,2.5f,0f);
             shot.transform.parent = activeShots.transform;
-            AudioSource.PlayClipAtPoint(laserShootSound.clip, transform.position);
+            laserShootSound.Play();
             shotsAvailable--;
         } else if (isReloading) {
             if (reloadingTime > reloadTime) {
@@ -115,25 +110,6 @@ public class Player : MonoBehaviour {
             } else {
                 reloadingTime += Time.deltaTime;
             }
-        }
-    }
-
-    void TrackPausing() {
-        bool pauseKey = Input.GetButtonDown("Cancel");
-        if (pauseKey) {
-            Pause();
-        }
-    }
-
-    public void Pause() {
-        if (isPaused) {
-            isPaused = false;
-            pauseMenu.gameObject.SetActive(false);
-            Time.timeScale = 1;
-        } else {
-            isPaused = true;
-            pauseMenu.gameObject.SetActive(true);
-            Time.timeScale = 0;
         }
     }
 
