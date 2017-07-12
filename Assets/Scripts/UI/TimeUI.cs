@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TimeUI : MonoBehaviour {
 
-    public float timeInSeconds;
+    public static float timeInSeconds;
 
     Text text;
     Cam mainCamera;

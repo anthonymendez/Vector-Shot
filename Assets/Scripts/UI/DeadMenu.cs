@@ -14,7 +14,7 @@ public class DeadMenu : MonoBehaviour {
         Variables.keysObtained = 0;
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        gameObject.SetActive(false);
+        DMUI.SetActive(false);
     }
 
     public void ToMainMenu() {
@@ -22,7 +22,7 @@ public class DeadMenu : MonoBehaviour {
         Variables.keysObtained = 0;
         SceneManager.LoadScene(0);
         GetComponent<StartOptions>().changeScenes = false;
-        gameObject.SetActive(false);
+        DMUI.SetActive(false);
     }
 
 }

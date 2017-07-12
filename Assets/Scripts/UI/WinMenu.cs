@@ -7,35 +7,18 @@ using UnityEngine.SceneManagement;
 public class WinMenu : MonoBehaviour {
 
     public Text TimeScore, GameScore, FinalScore;
-    public TimeUI TimeUI;
 
-    public Button restart, options, exit;
-
-    public OptMenu optMenu;
-
-    public CreditsMenu credMenu;
+    public GameObject WMUI;
 
     float placeHolder;
 
     float TS, GS, FS;
 
-    // Use this for initialization
-    void Start() {
-        restart.onClick.AddListener(RestartGame);
-
-        options.onClick.AddListener(OptionsMenu);
-
-        exit.onClick.AddListener(Credits);
-
-        gameObject.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update() {
+    void Awake() {
         //Calculate Timescore
         placeHolder = TimeUI.timeInSeconds;
-        if(placeHolder >= 60) {
-            TimeScore.text = ""+60+"";
+        if (placeHolder >= 60) {
+            TimeScore.text = "" + 60 + "";
             TS = 60;
         } else {
             TimeScore.text = (1000f / placeHolder).ToString();
@@ -49,18 +32,15 @@ public class WinMenu : MonoBehaviour {
         FinalScore.text = FS.ToString();
     }
 
-    void RestartGame() {
+    public void Restart() {
         Variables.score = 0;
         Variables.keysObtained = 0;
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        WMUI.SetActive(false);
     }
 
-    void OptionsMenu() {
-        optMenu.gameObject.SetActive(true);
-    }
+    public void Options() {
 
-    void Credits() {
-        credMenu.gameObject.SetActive(true);
     }
 }

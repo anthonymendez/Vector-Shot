@@ -6,7 +6,7 @@ public class Key : MonoBehaviour {
 
     public GameObject[] ignoreCollisions;
 
-    public GameObject WinMenu;
+    public GameObject UI;
 
     GameObjectPool keyPool;
     AudioSource keyPickupSound;
@@ -17,6 +17,7 @@ public class Key : MonoBehaviour {
         foreach (GameObject gObj in ignoreCollisions) {
 
         }
+        UI = GameObject.FindWithTag("UI");
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -26,7 +27,7 @@ public class Key : MonoBehaviour {
             AudioSource.PlayClipAtPoint(keyPickupSound.clip,transform.position);
             keyPool.AddGameObject(gameObject);
             if(Variables.keysObtained == 8) {
-                WinMenu.SetActive(true);
+                UI.GetComponentInChildren<WinMenu>().WMUI.SetActive(true);
                 Time.timeScale = 0;
             }
         }
