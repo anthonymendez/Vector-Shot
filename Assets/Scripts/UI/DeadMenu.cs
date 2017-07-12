@@ -6,35 +6,23 @@ using UnityEngine.SceneManagement;
 
 public class DeadMenu : MonoBehaviour {
 
-    public Button restart, options, exit, exitOptions;
-
-
-    public OptMenu optMenu;
-
-    public CreditsMenu credMenu;
-
-    void Start() {
-        restart.onClick.AddListener(RestartGame);
-        
-        options.onClick.AddListener(OptionsMenu);
-
-        exit.onClick.AddListener(Credits);
-    }
+    public GameObject DMUI;
 
     //Restart Method
-    void RestartGame() {
+    public void RestartGame() {
         Variables.score = 0;
         Variables.keysObtained = 0;
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        gameObject.SetActive(false);
     }
 
-    void OptionsMenu() {
-        optMenu.gameObject.SetActive(true);
-    }
-
-    void Credits() {
-        credMenu.gameObject.SetActive(true);
+    public void ToMainMenu() {
+        Variables.score = 0;
+        Variables.keysObtained = 0;
+        SceneManager.LoadScene(0);
+        GetComponent<StartOptions>().changeScenes = false;
+        gameObject.SetActive(false);
     }
 
 }
