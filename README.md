@@ -4,6 +4,8 @@
 
 ## <a href = "https://tonythetiger.itch.io/vector-shot" > Play on Itch.io! </a>
 
+## <a href = "http://www.kongregate.com/games/TonyDeTiger/vector-shot" > Play on Kongregate! </a>
+
 ### Game Objective
 
 The main objective of the game is to collect all 8 keys in the level without dying.
