@@ -1,12 +1,26 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
+[ExecuteInEditMode]
+[SelectionBase]
 public class Wall : MonoBehaviour {
 
-    // Use this for initialization
-    void Awake () {
-        
+    [SerializeField] int gridSize = 5;
+    
+    void Update() {
+        SnapToGrid();
+    }
+
+    private void SnapToGrid() {
+        Vector2 newPosition = new Vector2 (
+            Mathf.RoundToInt(transform.position.x / gridSize),
+            Mathf.RoundToInt(transform.position.y / gridSize)
+        );
+
+        newPosition *= gridSize;
+
+        transform.position = newPosition;
     }
 }
