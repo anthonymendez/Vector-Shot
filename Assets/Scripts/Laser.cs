@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour {
 
+    public const int ID = 0;
     public float moveSpeed;
     public bool isFriendly;
 

@@ -9,7 +9,7 @@ public class OptMenu : MonoBehaviour {
 
     public Slider sfxVol, musVol;
     
-    public Toggle floatyControls, lightingOn;
+    public Toggle lightingOn;
 
     public GameObject lighting;
 
@@ -26,8 +26,6 @@ public class OptMenu : MonoBehaviour {
         
         musAS = GameObject.FindWithTag("Background").GetComponent<AudioSource>();
         musVol.onValueChanged.AddListener(this.UpdateMusicVolumeFromSlider);
-        
-        floatyControls.onValueChanged.AddListener(updateControllerScheme);
 
         lightingOn.onValueChanged.AddListener(Lights);
 
@@ -36,7 +34,6 @@ public class OptMenu : MonoBehaviour {
         //Settings values already set
         musVol.value = Variables.musicVolume;
         musAS.volume = Variables.musicVolume;
-        floatyControls.isOn = Variables.isSpaceLike;
 
         gameObject.SetActive(false);
     }
@@ -56,11 +53,6 @@ public class OptMenu : MonoBehaviour {
 
     public void UpdateSFXVolumeFromSlider(float volume) {
         
-    }
-
-    public void updateControllerScheme(bool isSpaceLike) {
-        player.isSpaceLike = isSpaceLike;
-        Variables.isSpaceLike = isSpaceLike;
     }
 
     void Lights(bool isOn) {

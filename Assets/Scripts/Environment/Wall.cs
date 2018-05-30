@@ -8,9 +8,11 @@ using UnityEngine;
 public class Wall : MonoBehaviour {
 
     [SerializeField] int gridSize = 5;
-    
+    [SerializeField] SpriteRenderer wallSpriteRenderer;
+
     void Update() {
         SnapToGrid();
+        ScaleToGrid();
     }
 
     private void SnapToGrid() {
@@ -22,5 +24,18 @@ public class Wall : MonoBehaviour {
         newPosition *= gridSize;
 
         transform.position = newPosition;
+    }
+
+    private void ScaleToGrid() {
+        Vector2 size = wallSpriteRenderer.size;
+
+        Vector2 newSize = new Vector2 (
+            Mathf.RoundToInt(size.x / gridSize),
+            Mathf.RoundToInt(size.y / gridSize)
+        );
+
+        newSize *= gridSize;
+
+        wallSpriteRenderer.size = newSize;
     }
 }

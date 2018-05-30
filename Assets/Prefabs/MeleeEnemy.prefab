@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114101220705228096}
   - component: {fileID: 50538741260862858}
   - component: {fileID: 60892765430436826}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: MeleeEnemy
   m_TagString: MEnemy
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1859590833024806}
   m_LocalRotation: {x: 0, y: 0, z: 0.8239778, w: 0.566622}
-  m_LocalPosition: {x: -5.7283096, y: 0.2634012, z: 0}
+  m_LocalPosition: {x: -1.9666389, y: 11.641073, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -109,6 +109,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef5a8003641dcec4c903ee4286864a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1151831063044786, guid: 811a98415e3e9d74c8511a60515bcc72, type: 2}
+  enemyPool: {fileID: 114179163902344436, guid: 5d807b4192c238a4c9e5e2681d6dd10e,
+    type: 2}
+  physics: {fileID: 50538741260862858}
   maxLOSDistance: 30
   moveSpeed: 30
 --- !u!212 &212830682991380370
@@ -120,9 +124,11 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -135,6 +141,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -152,3 +159,4 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0

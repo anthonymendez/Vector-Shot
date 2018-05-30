@@ -18,8 +18,9 @@ public class LaserUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        text.text = string.Format(" Lasers {0}",player.shotsAvailable);
-        if(player.shotsAvailable == 0) {
+        int shotsAvailable = player.GetShotsAvailable();
+        text.text = string.Format(" Lasers {0}",shotsAvailable);
+        if(shotsAvailable == 0) {
             rToReload.gameObject.SetActive(true);
         } else {
             rToReload.gameObject.SetActive(false);

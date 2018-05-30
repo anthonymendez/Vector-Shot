@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Key : MonoBehaviour {
-    
+
+    public const int ID = 1;
     [SerializeField] GameObject UI;
     [SerializeField] GameObjectPool keyPool;
     [SerializeField] int pointsPerPickup = 50;

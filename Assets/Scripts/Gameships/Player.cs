@@ -3,36 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-    
-    public float moveSpeed;
-    public float rotateSpeed;
-    public float shotDelay;
-    public float reloadTime;
-    public bool isSpaceLike;
-    public int shotsOnMap;
-    public int shotsAvailable;
+
+    [SerializeField] float moveSpeed;
+    [SerializeField] float rotateSpeed;
+    [SerializeField] float shotDelay;
+    [SerializeField] float reloadTime;
+    [SerializeField] Camera mainCamera;
+    [SerializeField] int shotsOnMap;
+    [SerializeField] int shotsAvailable;
+    [SerializeField] GameObject activeShots;
+    [SerializeField] GameObjectPool laserPool;
 
     float timeSinceLastShot;
     int lasersShot;
-    GameObjectPool laserPool;
     Rigidbody2D physics;
-    GameObject activeShots;
-    Camera mainCamera;
     AudioSource laserShootSound, reloadSound;
     bool isReloading;
     float reloadingTime;
-    
+
+    public int GetShotsAvailable() {
+        return shotsAvailable;
+    }
 
     // Use this for initialization
     void Start () {
         reloadingTime = 0;
-        laserShootSound = GetComponents<AudioSource>()[0];
-        reloadSound = GetComponents<AudioSource>()[1];
-        activeShots = GameObject.FindWithTag("ActiveLaser");
-        shotsAvailable = shotsOnMap;
         lasersShot = 0;
         timeSinceLastShot = 0;
-        laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
+        laserShootSound = GetComponents<AudioSource>()[0];
+        reloadSound = GetComponents<AudioSource>()[1];
         physics = GetComponent<Rigidbody2D>();
         mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         Time.timeScale = 1;
@@ -54,32 +53,23 @@ public class Player : MonoBehaviour {
         //Get X and Y movements
         float x = Input.GetAxis("Horizontal"), y = Input.GetAxis("Vertical");
         Transform tempTrans = transform;
-        if (isSpaceLike) {
-            //Vertical to move back and forth
-            //Horizontal to move left and right
-            tempTrans.Translate(new Vector3(0f, y, 0f) * moveSpeed / Variables.speedDampener);
-            float zRot = transform.rotation.eulerAngles.z;
-            physics.MovePosition(tempTrans.position);
-            physics.MoveRotation(zRot - x * rotateSpeed / Variables.speedDampener);
-        } else {
-            //Vertical and Horizontal to move in all directions
-            Vector2 movement = new Vector2(x,y);
-            //Set rotation to 0 so we move relative to camera
-            tempTrans.rotation = Quaternion.Euler(0f, 0f, 0f);
-            tempTrans.Translate(movement * moveSpeed / Variables.speedDampener);
+        //Vertical and Horizontal to move in all directions
+        Vector2 movement = new Vector2(x,y);
+        //Set rotation to 0 so we move relative to camera
+        tempTrans.rotation = Quaternion.Euler(0f, 0f, 0f);
+        tempTrans.Translate(movement * moveSpeed / Variables.speedDampener);
 
-            physics.MovePosition(tempTrans.position);
+        physics.MovePosition(tempTrans.position);
 
-            //Mouse position to aim our ship
-            float cameraDistance = mainCamera.transform.position.y - transform.position.y;
-            Vector3 mousePosition = Input.mousePosition;
-            mousePosition = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cameraDistance));
+        //Mouse position to aim our ship
+        float cameraDistance = mainCamera.transform.position.y - transform.position.y;
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cameraDistance));
 
-            float angleRadian = Mathf.Atan2(mousePosition.y - transform.position.y, mousePosition.x - transform.position.x);
-            float angleDegrees = Mathf.Rad2Deg * angleRadian;
+        float angleRadian = Mathf.Atan2(mousePosition.y - transform.position.y, mousePosition.x - transform.position.x);
+        float angleDegrees = Mathf.Rad2Deg * angleRadian;
 
-            transform.rotation = Quaternion.Euler(0f, 0f, angleDegrees-90);
-        }
+        transform.rotation = Quaternion.Euler(0f, 0f, angleDegrees-90);
         TrackShooting();
     }
 
