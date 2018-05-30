@@ -35,6 +35,7 @@ public class Cam : MonoBehaviour {
         if (isDead() && !checkDied) {
             Time.timeScale = 0;
             checkDied = true;
+            Application.ExternalCall("kongregate.stats.submit", "Time", (int)(TimeUI.timeInSeconds*1000));
             GameObject.FindWithTag("UI").GetComponentInChildren<DeadMenu>().DMUI.SetActive(true);
         }
     }
