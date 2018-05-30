@@ -5,15 +5,11 @@ using UnityEngine;
 public class GameObjectPool : MonoBehaviour {
 
     public List<GameObject> pool;
-
     public GameObject prefab;
-
-    Player player;
 
     // Use this for initialization
     void Start () {
         pool = new List<GameObject>();
-        player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
 
     public GameObject GetGameObject() {
