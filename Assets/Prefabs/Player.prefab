@@ -347,13 +347,11 @@ MonoBehaviour:
   rotateSpeed: 500
   shotDelay: 0.25
   reloadTime: 0.5
-  isSpaceLike: 0
   mainCamera: {fileID: 20554302451438614, guid: 2f939c87a86d38545af520b55f80001b,
     type: 2}
   shotsOnMap: 5
   shotsAvailable: 5
-  activeShots: {fileID: 1280224947693228, guid: 2b950787e2bd96b4c8dfd1f035d9f3e5,
-    type: 2}
+  activeShots: {fileID: 0}
   laserPool: {fileID: 114847681297626020, guid: 2a52bb17045f65e438de9f68c202c228,
     type: 2}
 --- !u!212 &212627196891311866

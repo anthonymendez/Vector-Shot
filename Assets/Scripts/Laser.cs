@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour {
 
+    public List<string> collidableGameObjectTags = new List<string>() {"Laserpool", "MEnemyPool", "REnemyPool", "Wall", "Player" };
     public const int ID = 0;
     public float moveSpeed;
     public bool isFriendly;
@@ -44,22 +45,35 @@ public class Laser : MonoBehaviour {
         if (laserPool == null) {
             laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
         }
-        if (collision.gameObject.CompareTag("Wall")) {
-            laserPool.AddGameObject(gameObject);
+        if (HitCollidableObject(collision)) {
+            AddToLaserPool();
         } else if (collision.gameObject.CompareTag("REnemy") && isFriendly) {
             rangedEnemyPool.AddGameObject(collision.gameObject);
             AudioSource.PlayClipAtPoint(shipExplosionSound.clip, transform.position);
             Variables.score += 10;
-            laserPool.AddGameObject(gameObject);
+            AddToLaserPool();
         } else if (collision.gameObject.CompareTag("MEnemy") && isFriendly) {
             meleeEnemyPool.AddGameObject(collision.gameObject);
             AudioSource.PlayClipAtPoint(shipExplosionSound.clip, transform.position);
             Variables.score += 10;
-            laserPool.AddGameObject(gameObject);
+            AddToLaserPool();
         } else if (collision.gameObject.CompareTag("Player") && !isFriendly) {
             AudioSource.PlayClipAtPoint(shipExplosionSound.clip, transform.position);
             collision.gameObject.SetActive(false);
-            laserPool.AddGameObject(gameObject);
+            AddToLaserPool();
         }
+    }
+
+    private bool HitCollidableObject(Collision2D collision) {
+        string collisionTag = collision.gameObject.tag;
+        foreach (string tag in collidableGameObjectTags) {
+            if (collisionTag.Equals(tag))
+                return true;
+        }
+        return false;
+    }
+
+    private void AddToLaserPool() {
+        laserPool.AddGameObject(gameObject);
     }
 }

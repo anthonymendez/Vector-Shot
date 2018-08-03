@@ -75,7 +75,7 @@ public abstract class AbstractEnemy : MonoBehaviour {
 
     private bool IsLookingAtPlayer() {
         bool nullColliderCheck = sight.collider != null;
-        bool colliderIsNotThisGameObject = sight.collider.gameObject != gameObject;
+        bool colliderIsNotThisGameObject = (sight.collider.gameObject != gameObject);
         bool colliderIsPlayer = sight.collider.gameObject.Equals(player);
 
         return nullColliderCheck && colliderIsNotThisGameObject && colliderIsPlayer;

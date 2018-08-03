@@ -310,6 +310,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114821394160488442, guid: 811a98415e3e9d74c8511a60515bcc72,
+        type: 2}
+      propertyPath: activeShots
+      value: 
+      objectReference: {fileID: 700809444}
+    - target: {fileID: 114821394160488442, guid: 811a98415e3e9d74c8511a60515bcc72,
+        type: 2}
+      propertyPath: laserPool
+      value: 
+      objectReference: {fileID: 1096354083}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 811a98415e3e9d74c8511a60515bcc72, type: 2}
   m_IsPrefabParent: 0
@@ -318,6 +328,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4122410151553446, guid: 238ba71442baf0f459c9de037f771d4f,
     type: 2}
   m_PrefabInternal: {fileID: 1768975015}
+--- !u!1 &700809444 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1280224947693228, guid: 2b950787e2bd96b4c8dfd1f035d9f3e5,
+    type: 2}
+  m_PrefabInternal: {fileID: 1263284960}
 --- !u!1001 &746330460
 Prefab:
   m_ObjectHideFlags: 0
@@ -415,6 +430,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3276f798c6256f440bff8cc055f9345b, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1096354083 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114847681297626020, guid: 2a52bb17045f65e438de9f68c202c228,
+    type: 2}
+  m_PrefabInternal: {fileID: 746330460}
+  m_Script: {fileID: 11500000, guid: 94cf4414ee687364cbcd0880656f0e32, type: 3}
 --- !u!1 &1214165140
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,6 +637,10 @@ Prefab:
     - target: {fileID: 4122410151553446, guid: 238ba71442baf0f459c9de037f771d4f, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1658252871992804, guid: 238ba71442baf0f459c9de037f771d4f, type: 2}
+      propertyPath: m_TagString
+      value: KeyPool
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 238ba71442baf0f459c9de037f771d4f, type: 2}

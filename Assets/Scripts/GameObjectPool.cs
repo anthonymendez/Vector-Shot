@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class GameObjectPool : MonoBehaviour {
 
-    public List<GameObject> pool;
-    public GameObject prefab;
+    [SerializeField] GameObject prefab;
 
-    // Use this for initialization
-    void Start () {
-        pool = new List<GameObject>();
-    }
+    private List<GameObject> pool = new List<GameObject>();
 
     public GameObject GetGameObject() {
+        print(string.Format("Count: {0}; Capacity {1};", pool.Count, pool.Capacity));
         if (pool.Count > 0) {
             GameObject GObj = pool[0];
             GObj.SetActive(true);

@@ -11,7 +11,6 @@ public class Key : MonoBehaviour {
     AudioSource keyPickupSound;
 
     private void Start() {
-        keyPool = GameObject.FindWithTag("KeyPool").GetComponent<GameObjectPool>();
         keyPickupSound = GetComponent<AudioSource>();
         UI = GameObject.FindWithTag("UI");
     }
