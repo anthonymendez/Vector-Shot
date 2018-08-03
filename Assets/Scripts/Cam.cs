@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class Cam : MonoBehaviour {
 
-    GameObject player;
+    [Header("Camera Follow Properties")]
+    [Tooltip("Amount of time to center camera on player.\nUnits in seconds.\nRecommended: 0.01f")][SerializeField] float smoothTime = 0.01f;
+    [Tooltip("Max Camera Follow Speed.\nRecommended: 75.0f")] [SerializeField] float maxSpeed = 75.0f;
+    [Tooltip("Recommended: -10f\nDo not set to or above 0f")] [SerializeField] float zIndexPostion = -10f;
 
-    Vector3 offset;
-    Vector3 velocity;
+    [Header("Prefabs")]
+    [SerializeField] GameObject deathMenuPrefab;
 
-    bool checkDied;
+    [Header("System Variables")]
+    private GameObject player;
+    private Vector3 offset;
+    private Vector3 velocity;
+    private bool checkDied;
 
     // Use this for initialization
     void Start () {
@@ -25,8 +32,12 @@ public class Cam : MonoBehaviour {
 
     // Updates regardless of Framerate
     void FixedUpdate () {
-        transform.position = Vector3.SmoothDamp(transform.position,player.transform.position,ref velocity,0.10f, 75.0f, Time.deltaTime);
-        transform.position = new Vector3(transform.position.x, transform.position.y, -10f);
+        SmoothFollowPlayer();
+    }
+
+    private void SmoothFollowPlayer() {
+        transform.position = Vector3.SmoothDamp(transform.position, player.transform.position, ref velocity, smoothTime, maxSpeed, Time.deltaTime);
+        transform.position = new Vector3(transform.position.x, transform.position.y, zIndexPostion);
     }
 
     //If player is dead, we're going to end the game and bring up the menu
@@ -35,9 +46,13 @@ public class Cam : MonoBehaviour {
         if (isDead() && !checkDied) {
             Time.timeScale = 0;
             checkDied = true;
-            Application.ExternalCall("kongregate.stats.submit", "Time", (int)(TimeUI.timeInSeconds*1000));
-            GameObject.FindWithTag("UI").GetComponentInChildren<DeadMenu>().DMUI.SetActive(true);
+            CreateDeathMenu();
         }
+    }
+
+    private void CreateDeathMenu() {
+        Transform UI = GameObject.FindWithTag("UI").transform;
+        GameObject deathMenu = Instantiate<GameObject>(deathMenuPrefab, UI, false);
     }
 
     public bool isDead() {

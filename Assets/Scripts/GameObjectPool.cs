@@ -9,7 +9,6 @@ public class GameObjectPool : MonoBehaviour {
     private List<GameObject> pool = new List<GameObject>();
 
     public GameObject GetGameObject() {
-        print(string.Format("Count: {0}; Capacity {1};", pool.Count, pool.Capacity));
         if (pool.Count > 0) {
             GameObject GObj = pool[0];
             GObj.SetActive(true);

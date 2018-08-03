@@ -1035,7 +1035,8 @@ MonoBehaviour:
   exitOptions: {fileID: 114297997577827846}
   sfxVol: {fileID: 114211710779272210}
   musVol: {fileID: 114038596091858192}
-  floatyControls: {fileID: 114233358779889518}
+  lightingOn: {fileID: 0}
+  lighting: {fileID: 0}
 --- !u!222 &222051365915829964
 CanvasRenderer:
   m_ObjectHideFlags: 1
