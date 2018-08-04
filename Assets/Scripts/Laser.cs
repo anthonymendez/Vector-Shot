@@ -10,7 +10,6 @@ public class Laser : MonoBehaviour {
     public bool isFriendly;
 
     GameObjectPool laserPool, meleeEnemyPool, rangedEnemyPool;
-    Player player;
     Rigidbody2D physics;
     AudioSource shipExplosionSound;
 
@@ -19,7 +18,6 @@ public class Laser : MonoBehaviour {
         laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
         meleeEnemyPool = GameObject.FindWithTag("MEnemyPool").GetComponent<GameObjectPool>();
         rangedEnemyPool = GameObject.FindWithTag("REnemyPool").GetComponent<GameObjectPool>();
-        player = GameObject.FindWithTag("Player").GetComponent<Player>();
         physics = GetComponent<Rigidbody2D>();
     }
 

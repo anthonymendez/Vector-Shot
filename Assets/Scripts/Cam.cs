@@ -14,14 +14,12 @@ public class Cam : MonoBehaviour {
 
     [Header("System Variables")]
     private GameObject player;
-    private Vector3 offset;
     private Vector3 velocity;
     private bool checkDied;
 
     // Use this for initialization
     void Start () {
         player = GameObject.FindWithTag("Player");
-        offset = transform.position - player.transform.position;
         velocity = Vector3.zero;
         checkDied = false;
     }
@@ -52,7 +50,7 @@ public class Cam : MonoBehaviour {
 
     private void CreateDeathMenu() {
         Transform UI = GameObject.FindWithTag("UI").transform;
-        GameObject deathMenu = Instantiate<GameObject>(deathMenuPrefab, UI, false);
+        Instantiate<GameObject>(deathMenuPrefab, UI, false);
     }
 
     public bool isDead() {

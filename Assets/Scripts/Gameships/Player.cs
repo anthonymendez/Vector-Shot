@@ -15,7 +15,6 @@ public class Player : MonoBehaviour {
     [SerializeField] GameObjectPool laserPool;
 
     float timeSinceLastShot;
-    int lasersShot;
     Rigidbody2D physics;
     AudioSource laserShootSound, reloadSound;
     bool isReloading;
@@ -28,7 +27,6 @@ public class Player : MonoBehaviour {
     // Use this for initialization
     void Start () {
         reloadingTime = 0;
-        lasersShot = 0;
         timeSinceLastShot = 0;
         laserShootSound = GetComponents<AudioSource>()[0];
         reloadSound = GetComponents<AudioSource>()[1];
@@ -50,17 +48,26 @@ public class Player : MonoBehaviour {
     }
 
     void TrackInput() {
+        ProcessTranslation();
+        ProcessRotation();
+        ProcessShooting();
+    }
+
+    private void ProcessTranslation() {
         //Get X and Y movements
-        float x = Input.GetAxis("Horizontal"), y = Input.GetAxis("Vertical");
-        Transform tempTrans = transform;
+        float moveX = Input.GetAxis("Horizontal"), 
+              moveY = Input.GetAxis("Vertical");
+        Transform newTrasnfrom = transform;
         //Vertical and Horizontal to move in all directions
-        Vector2 movement = new Vector2(x,y);
+        Vector2 movement = new Vector2(moveX, moveY);
         //Set rotation to 0 so we move relative to camera
-        tempTrans.rotation = Quaternion.Euler(0f, 0f, 0f);
-        tempTrans.Translate(movement * moveSpeed / Variables.speedDampener);
+        newTrasnfrom.rotation = Quaternion.Euler(0f, 0f, 0f);
+        newTrasnfrom.Translate(movement * moveSpeed / Variables.speedDampener);
 
-        physics.MovePosition(tempTrans.position);
+        physics.MovePosition(newTrasnfrom.position);
+    }
 
+    private void ProcessRotation() {
         //Mouse position to aim our ship
         float cameraDistance = mainCamera.transform.position.y - transform.position.y;
         Vector3 mousePosition = Input.mousePosition;
@@ -69,11 +76,10 @@ public class Player : MonoBehaviour {
         float angleRadian = Mathf.Atan2(mousePosition.y - transform.position.y, mousePosition.x - transform.position.x);
         float angleDegrees = Mathf.Rad2Deg * angleRadian;
 
-        transform.rotation = Quaternion.Euler(0f, 0f, angleDegrees-90);
-        TrackShooting();
+        transform.rotation = Quaternion.Euler(0f, 0f, angleDegrees - 90);
     }
 
-    void TrackShooting() {
+    void ProcessShooting() {
         bool reloadKeyDown = Input.GetKeyDown(KeyCode.R);
         if (reloadKeyDown) {
             isReloading = true;

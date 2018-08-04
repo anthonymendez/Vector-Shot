@@ -6,24 +6,15 @@ using UnityEngine.UI;
 public class OptMenu : MonoBehaviour {
 
     public Button exitOptions;
-
     public Slider sfxVol, musVol;
-    
     public Toggle lightingOn;
-
     public GameObject lighting;
-
     AudioSource musAS;
-
-    Player player;
     
     // Use this for initialization
     void Start () {
-        
-        player = GameObject.FindWithTag("Player").GetComponent<Player>();
 
         //Options Menu Stuff
-        
         musAS = GameObject.FindWithTag("Background").GetComponent<AudioSource>();
         musVol.onValueChanged.AddListener(this.UpdateMusicVolumeFromSlider);
 
