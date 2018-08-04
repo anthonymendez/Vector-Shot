@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class CreditsMenu : MonoBehaviour {
 
-    public Text title, song, soundEffects;
+    [SerializeField] Text title, 
+                          song, 
+                          soundEffects;
 
-    public Button exit;
+    [SerializeField] Button exit;
 
 	// Use this for initialization
 	void Start () {

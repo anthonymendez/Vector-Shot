@@ -6,12 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class WinMenu : MonoBehaviour {
 
-    public Text TimeScore, GameScore, FinalScore;
+    [SerializeField] Text TimeScore, GameScore, FinalScore;
 
     public GameObject WMUI;
 
     float placeHolder;
-
     float TS, GS, FS;
 
     void Awake() {

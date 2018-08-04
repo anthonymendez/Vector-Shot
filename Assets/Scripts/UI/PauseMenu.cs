@@ -6,13 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour {
 
-    public Button cont, options, exit;
-    public OptMenu optMenu;
-    public CreditsMenu credMenu;
+    [SerializeField] Button cont, options, exit;
+    [SerializeField] OptMenu optMenu;
+    [SerializeField] CreditsMenu credMenu;
 
     void Start() {
         options.onClick.AddListener(OptionsMenu);
-
         exit.onClick.AddListener(Credits);
 
         gameObject.SetActive(false);
@@ -21,10 +20,6 @@ public class PauseMenu : MonoBehaviour {
     void OptionsMenu() {
         optMenu.gameObject.SetActive(true);
     }
-    /*
-    public void Pause() {
-        player.Pause();
-    }*/
 
     void Credits() {
         credMenu.gameObject.SetActive(true);

@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class OptMenu : MonoBehaviour {
 
-    public Button exitOptions;
-    public Slider sfxVol, musVol;
-    public Toggle lightingOn;
-    public GameObject lighting;
+    [SerializeField] Button exitOptions;
+    [SerializeField] Slider sfxVol, musVol;
+    [SerializeField] Toggle lightingOn;
+    [SerializeField] GameObject lighting;
+
     AudioSource musAS;
     
     // Use this for initialization
@@ -16,10 +17,9 @@ public class OptMenu : MonoBehaviour {
 
         //Options Menu Stuff
         musAS = GameObject.FindWithTag("Background").GetComponent<AudioSource>();
+
         musVol.onValueChanged.AddListener(this.UpdateMusicVolumeFromSlider);
-
         lightingOn.onValueChanged.AddListener(Lights);
-
         exitOptions.onClick.AddListener(OptionsMenu);
 
         //Settings values already set

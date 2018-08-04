@@ -5,11 +5,8 @@ using UnityEngine.UI;
 
 public class MainMenuOptMenu : MonoBehaviour {
 
-    public Button exitOptions;
-
-    public Slider sfxVol, musVol;
-    
-    public Toggle floatyControls;
+    [SerializeField] Button exitOptions;
+    [SerializeField] Slider sfxVol, musVol;
 
     AudioSource musAS;
 
@@ -21,12 +18,7 @@ public class MainMenuOptMenu : MonoBehaviour {
 
         sfxVol.onValueChanged.AddListener(this.UpdateSFXVolumeFromSlider);
 
-        floatyControls.onValueChanged.AddListener(updateControllerScheme);
-
         exitOptions.onClick.AddListener(OptionsMenu);
-
-        //Settings values already set
-        floatyControls.isOn = Variables.isSpaceLike;
 
         gameObject.SetActive(false);
     }
@@ -46,9 +38,5 @@ public class MainMenuOptMenu : MonoBehaviour {
 
     public void UpdateSFXVolumeFromSlider(float volume) {
         Variables.sfxVolume = volume;
-    }
-
-    public void updateControllerScheme(bool isSpaceLike) {
-        Variables.isSpaceLike = isSpaceLike;
     }
 }

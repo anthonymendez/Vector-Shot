@@ -6,19 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
 
-    public Text title;
     public Button play, options, credits, exit;
-    public GameObject optionsMenu, creditsMenu;
+
+    [SerializeField] Text title;
+    [SerializeField] GameObject optionsMenu, creditsMenu;
     
 	// Use this for initialization
 	void Start () {
-
         play.onClick.AddListener(Play);
-
         options.onClick.AddListener(OptionsMenu);
-
         credits.onClick.AddListener(Credits);
-
         exit.onClick.AddListener(Exit);
     }
 	

@@ -5,10 +5,9 @@ using UnityEngine.UI;
 
 public class LaserUI : MonoBehaviour {
 
-    public Text rToReload;
+    [SerializeField] Text rToReload;
 
     Text text;
-
     Player player;
 
 	void Start () {

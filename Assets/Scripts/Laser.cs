@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour {
 
-    public List<string> collidableGameObjectTags = new List<string>() {"Laserpool", "MEnemyPool", "REnemyPool", "Wall", "Player" };
     public const int ID = 0;
-    public float moveSpeed;
+
     public bool isFriendly;
+
+    [SerializeField] float moveSpeed;
+    [SerializeField] List<string> collidableGameObjectTags = new List<string>() {"Laserpool", "MEnemyPool", "REnemyPool", "Wall", "Player" };
 
     GameObjectPool laserPool, meleeEnemyPool, rangedEnemyPool;
     Rigidbody2D physics;
