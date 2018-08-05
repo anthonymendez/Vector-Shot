@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114281955782188752}
   - component: {fileID: 60068932606101686}
   - component: {fileID: 50164987703089326}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Ranged Enemy
   m_TagString: REnemy
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: bf297f271cc777a43898b9ffc48eef70, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -71,7 +71,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 1031762114677124}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: bf297f271cc777a43898b9ffc48eef70, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -106,9 +106,13 @@ MonoBehaviour:
   enemyPool: {fileID: 114809490596110144, guid: 3276f798c6256f440bff8cc055f9345b,
     type: 2}
   physics: {fileID: 50164987703089326}
-  maxLOSDistance: 25
+  maxLOSDistance: 50
   moveSpeed: 10
-  timeBetweenShots: 0
+  masksDetectedByRaycast:
+    serializedVersion: 2
+    m_Bits: 1536
+  rayColor: {r: 0, g: 1, b: 0.008378744, a: 1}
+  timeBetweenShots: 1
   laserPool: {fileID: 114847681297626020, guid: 2a52bb17045f65e438de9f68c202c228,
     type: 2}
 --- !u!212 &212279919935651886

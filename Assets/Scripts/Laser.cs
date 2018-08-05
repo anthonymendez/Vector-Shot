@@ -9,7 +9,7 @@ public class Laser : MonoBehaviour {
     public bool isFriendly;
 
     [SerializeField] float moveSpeed;
-    [SerializeField] List<string> collidableGameObjectTags = new List<string>() {"Laserpool", "MEnemyPool", "REnemyPool", "Wall", "Player" };
+    [SerializeField] List<string> collidableGameObjectTags = new List<string>() { "LaserShot", "MEnemy", "REnemy", "Wall", "Player" };
 
     GameObjectPool laserPool, meleeEnemyPool, rangedEnemyPool;
     Rigidbody2D physics;
@@ -39,7 +39,6 @@ public class Laser : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        string tag = collision.gameObject.tag;
         //Check if colliding object is laser, if so, each laser 
         //calls this method and adds themselves to the pool
         if (laserPool == null) {
@@ -47,21 +46,20 @@ public class Laser : MonoBehaviour {
         }
         if (HitCollidableObject(collision)) {
             AddToLaserPool();
-        } else if (collision.gameObject.CompareTag("REnemy") && isFriendly) {
-            rangedEnemyPool.AddGameObject(collision.gameObject);
-            AudioSource.PlayClipAtPoint(shipExplosionSound.clip, transform.position);
-            Variables.score += 10;
-            AddToLaserPool();
-        } else if (collision.gameObject.CompareTag("MEnemy") && isFriendly) {
-            meleeEnemyPool.AddGameObject(collision.gameObject);
-            AudioSource.PlayClipAtPoint(shipExplosionSound.clip, transform.position);
-            Variables.score += 10;
-            AddToLaserPool();
-        } else if (collision.gameObject.CompareTag("Player") && !isFriendly) {
-            AudioSource.PlayClipAtPoint(shipExplosionSound.clip, transform.position);
-            collision.gameObject.SetActive(false);
-            AddToLaserPool();
-        }
+            Debug.Log(string.Format("Laser hit: {0}; Laser is Friendly: {1}", collision.gameObject.tag, isFriendly));
+            if (collision.gameObject.CompareTag("REnemy") && isFriendly) {
+                rangedEnemyPool.AddGameObject(collision.gameObject);
+                AudioSource.PlayClipAtPoint(shipExplosionSound.clip, transform.position);
+                Variables.score += 10;
+            } else if (collision.gameObject.CompareTag("MEnemy") && isFriendly) {
+                meleeEnemyPool.AddGameObject(collision.gameObject);
+                AudioSource.PlayClipAtPoint(shipExplosionSound.clip, transform.position);
+                Variables.score += 10;
+            } else if (collision.gameObject.CompareTag("Player") && !isFriendly) {
+                AudioSource.PlayClipAtPoint(shipExplosionSound.clip, transform.position);
+                collision.gameObject.SetActive(false);
+            }
+        } 
     }
 
     private bool HitCollidableObject(Collision2D collision) {

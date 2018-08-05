@@ -5,8 +5,10 @@ using UnityEngine;
 public class RangedEnemy : AbstractEnemy {
 
     public const int ID = 2;
+
     [SerializeField] float timeBetweenShots;
     [SerializeField] protected GameObjectPool laserPool;
+
     protected float timeSinceLastShot;
 
     new void Start() {
@@ -24,7 +26,7 @@ public class RangedEnemy : AbstractEnemy {
     }
 
     void TrackShooting() {
-        if (CanShootNow()) {
+        if (IsLookingAtPlayer() && CanShootNow()) {
             ShootLaser();
             timeSinceLastShot = 0;
         }

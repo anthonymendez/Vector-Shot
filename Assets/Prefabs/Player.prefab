@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 82690660626347326}
   - component: {fileID: 81400097977916876}
   - component: {fileID: 82350463007045918}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4854198505552976}
   - component: {fileID: 212627196891311866}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

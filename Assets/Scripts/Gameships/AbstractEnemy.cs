@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class AbstractEnemy : MonoBehaviour {
+    [Header("General Properties")]
     [SerializeField] protected GameObject player;
     [SerializeField] protected GameObjectPool enemyPool;
     [SerializeField] protected Rigidbody2D physics;
+
+    [Header("Tracking Properties")]
     [SerializeField] protected float maxLOSDistance;
     [SerializeField] protected float moveSpeed;
+    [SerializeField] protected LayerMask masksDetectedByRaycast;
+
+    [Header("Debug Properties")]
+    [SerializeField] protected Color rayColor;
 
     protected RaycastHit2D sight;
     protected Vector3 playerLastSeen;
     protected Vector3 smoothVelocity;
-
-
 
     // Use this for initialization
     protected void Start () {
@@ -37,19 +42,14 @@ public abstract class AbstractEnemy : MonoBehaviour {
         Vector3 direction = (player.transform.position - transform.position).normalized;
         Vector3 sightRange = direction * maxLOSDistance;
 
-        sight = Physics2D.Raycast(currentPosition, direction, maxLOSDistance);
+        sight = Physics2D.Raycast(currentPosition, direction, maxLOSDistance, masksDetectedByRaycast);
 
         bool nullColliderCheck = sight.collider != null;
-
         if (nullColliderCheck) {
-            bool colliderIsNotThisGameObject = sight.collider.gameObject != gameObject;
-
-            if (colliderIsNotThisGameObject) {
-                Debug.Log("Rigidbody Collider is: " + sight.collider);
-            }
+            Debug.Log("Rigidbody Collider is: " + sight.collider);
         }
 
-        Debug.DrawRay(currentPosition, sightRange, Color.red);
+        Debug.DrawRay(currentPosition, sightRange, rayColor);
     }
 
     void TrackMovement() {
@@ -66,18 +66,22 @@ public abstract class AbstractEnemy : MonoBehaviour {
         }
     }
 
-    private bool IsNotAtLastSeenPlayerLocation() {
+    protected bool IsNotAtLastSeenPlayerLocation() {
         float distanceFromPlayer = (playerLastSeen - transform.position).magnitude;
-        float radiusOfLocation = 0.1f;
+        float radiusOfLocation = 0.25f;
 
         return distanceFromPlayer > radiusOfLocation;
     }
 
-    private bool IsLookingAtPlayer() {
-        bool nullColliderCheck = sight.collider != null;
-        bool colliderIsNotThisGameObject = (sight.collider.gameObject != gameObject);
-        bool colliderIsPlayer = sight.collider.gameObject.Equals(player);
+    protected bool IsLookingAtPlayer() {
+        bool colliderIsNotNull = sight.collider != null;
+        if (colliderIsNotNull) {
+            bool colliderIsNotThisGameObject = (sight.collider.gameObject != gameObject);
+            bool colliderIsPlayer = sight.collider.gameObject.Equals(player);
 
-        return nullColliderCheck && colliderIsNotThisGameObject && colliderIsPlayer;
+            return colliderIsNotThisGameObject && colliderIsPlayer;
+        }
+
+        return false;
     }
 }
