@@ -21,7 +21,7 @@ public class MeleeEnemy : AbstractEnemy {
     void OnCollisionEnter2D(Collision2D collision) {
         GameObject collidingGameObject = collision.gameObject;
 
-        if (collidingGameObject.Equals(player)) {
+        if (collidingGameObject.CompareTag(player.tag)) {
             player.SetActive(false);
         }
     }

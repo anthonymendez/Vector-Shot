@@ -62,7 +62,10 @@ public abstract class AbstractEnemy : MonoBehaviour {
             Transform newTransform = transform;
             newTransform.up = playerLastSeen - transform.position;
             newTransform.Translate(new Vector3(0f, 1f, 0f) * moveSpeed / Variables.speedDampener);
-            physics.MovePosition(newTransform.position);
+            physics.angularVelocity = 0f;
+            physics.velocity = Vector2.up * moveSpeed / Variables.speedDampener;
+        } else {
+            physics.velocity = Vector2.zero;
         }
     }
 
