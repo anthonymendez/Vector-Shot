@@ -1,24 +1,36 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    [SerializeField] float moveSpeed;
-    [SerializeField] float rotateSpeed;
-    [SerializeField] float shotDelay;
-    [SerializeField] float reloadTime;
+    [Header("Movement Properties")]
+    [SerializeField] float moveSpeed = 35f;
+    [SerializeField] float rotateSpeed = 500f;
+
+    [Header("Shooting Properties")]
+    [SerializeField] float shotDelay = 0.25f;
+    [SerializeField] float reloadTime = 0.5f;
+    [SerializeField] int shotLimit = 5;
+
+    [Header("Shield Properties")]
+    [SerializeField] float shieldRegenTime = 5f;
+    [SerializeField] GameObject shieldGameObject;
+
     [SerializeField] Camera mainCamera;
-    [SerializeField] int shotsOnMap;
-    [SerializeField] int shotsAvailable;
     [SerializeField] GameObject activeShots;
     [SerializeField] GameObjectPool laserPool;
+    
+    private Shield shield;
+    private AudioSource laserShootSound, reloadSound;
+    private Rigidbody2D physics;
 
-    float timeSinceLastShot;
-    Rigidbody2D physics;
-    AudioSource laserShootSound, reloadSound;
+    private int shotsAvailable = 5;
     bool isReloading;
+    float timeSinceLastShot;
     float reloadingTime;
+    float shieldRechargingTime;
 
     public int GetShotsAvailable() {
         return shotsAvailable;
@@ -28,10 +40,12 @@ public class Player : MonoBehaviour {
     void Start () {
         reloadingTime = 0;
         timeSinceLastShot = 0;
+        shieldRechargingTime = 0;
         laserShootSound = GetComponents<AudioSource>()[0];
         reloadSound = GetComponents<AudioSource>()[1];
         physics = GetComponent<Rigidbody2D>();
         mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+        shield = shieldGameObject.GetComponent<Shield>();
         Time.timeScale = 1;
     }
     
@@ -44,12 +58,12 @@ public class Player : MonoBehaviour {
         TrackInput();
         //Keep track of our time since last shot through seconds
         timeSinceLastShot += Time.deltaTime;
-        
     }
 
     void TrackInput() {
         ProcessTranslation();
         ProcessRotation();
+        ProcessShieldStatus();
         ProcessShooting();
     }
 
@@ -79,7 +93,39 @@ public class Player : MonoBehaviour {
         transform.rotation = Quaternion.Euler(0f, 0f, angleDegrees - 90);
     }
 
-    void ProcessShooting() {
+    private void ProcessShieldStatus() {
+        if (shield.ShieldAvailable()) {
+            UseShield();
+        } else {
+            ShieldRecharge();
+        }
+    }
+
+    private void UseShield() {
+        bool activateShield = Input.GetButton("Fire2");
+
+        if (activateShield) {
+            shieldGameObject.SetActive(true);
+        } else {
+            shieldGameObject.SetActive(false);
+        }
+    }
+
+    private void ShieldRecharge() {
+        shieldGameObject.SetActive(false);
+        shieldRechargingTime += Time.deltaTime;
+
+        if (shieldRechargingTime >= shieldRegenTime) {
+            shield.RegenShield();
+            shieldRechargingTime = 0f;
+        }
+    }
+
+    private void ProcessShooting() {
+        if (shieldGameObject.activeSelf) {
+            return;
+        }
+
         bool reloadKeyDown = Input.GetKeyDown(KeyCode.R);
         if (reloadKeyDown) {
             isReloading = true;
@@ -102,7 +148,7 @@ public class Player : MonoBehaviour {
         } else if (isReloading) {
             if (reloadingTime > reloadTime) {
                 isReloading = false;
-                shotsAvailable = shotsOnMap;
+                shotsAvailable = shotLimit;
             } else {
                 reloadingTime += Time.deltaTime;
             }

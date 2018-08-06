@@ -5,6 +5,7 @@ using UnityEngine;
 public class Cam : MonoBehaviour {
 
     [Header("Camera Follow Properties")]
+    [Tooltip("If marked, camera will not move.")] [SerializeField] bool isStaticCamera = false;
     [Tooltip("Amount of time to center camera on player.\nUnits in seconds.\nRecommended: 0.01f")][SerializeField] float smoothTime = 0.01f;
     [Tooltip("Max Camera Follow Speed.\nRecommended: 75.0f")] [SerializeField] float maxSpeed = 75.0f;
     [Tooltip("Recommended: -10f\nDo not set to or above 0f")] [SerializeField] float zIndexPostion = -10f;
@@ -30,7 +31,9 @@ public class Cam : MonoBehaviour {
 
     // Updates regardless of Framerate
     void FixedUpdate () {
-        SmoothFollowPlayer();
+        if (!isStaticCamera) {
+            SmoothFollowPlayer();
+        }
     }
 
     private void SmoothFollowPlayer() {

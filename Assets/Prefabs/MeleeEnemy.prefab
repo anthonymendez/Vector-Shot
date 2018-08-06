@@ -118,6 +118,7 @@ MonoBehaviour:
   masksDetectedByRaycast:
     serializedVersion: 2
     m_Bits: 1536
+  bonkStunTime: 1
   rayColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!212 &212830682991380370
 SpriteRenderer:

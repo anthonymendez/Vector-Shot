@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AbstractEnemy : MonoBehaviour {
+public abstract class AbstractEnemy : MonoBehaviour, Bonkable {
     [Header("General Properties")]
     [SerializeField] protected GameObject player;
     [SerializeField] protected GameObjectPool enemyPool;
@@ -12,6 +13,7 @@ public abstract class AbstractEnemy : MonoBehaviour {
     [SerializeField] protected float maxLOSDistance;
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected LayerMask masksDetectedByRaycast;
+    [SerializeField] [Range(0f, 5f)] protected float bonkStunTime = 5f;
 
     [Header("Debug Properties")]
     [SerializeField] protected Color rayColor;
@@ -19,6 +21,9 @@ public abstract class AbstractEnemy : MonoBehaviour {
     protected RaycastHit2D sight;
     protected Vector3 playerLastSeen;
     protected Vector3 smoothVelocity;
+
+    protected bool bonked = false;
+    protected float bonkTimer = 0f;
 
     // Use this for initialization
     protected void Start () {
@@ -33,8 +38,21 @@ public abstract class AbstractEnemy : MonoBehaviour {
     }
 
     protected void FixedUpdate() {
+        if (bonked) {
+            TrackTimeSinceBonked();
+        }
         RayTracking();
         TrackMovement();
+    }
+
+    private void TrackTimeSinceBonked() {
+        bonkTimer += Time.fixedDeltaTime;
+        Debug.Log(string.Format("Bonk Timer: {0}", bonkTimer));
+
+        if (bonkTimer > bonkStunTime) {
+            bonked = false;
+            bonkTimer = 0;
+        }
     }
 
     void RayTracking() {
@@ -57,14 +75,14 @@ public abstract class AbstractEnemy : MonoBehaviour {
             playerLastSeen = player.transform.position;
         }
 
-        if (IsNotAtLastSeenPlayerLocation()) {
+        if (!bonked && IsNotAtLastSeenPlayerLocation()) {
             //This is genius, thank you abar http://answers.unity3d.com/questions/585035/lookat-2d-equivalent-.html
             Transform newTransform = transform;
             newTransform.up = playerLastSeen - transform.position;
             newTransform.Translate(new Vector3(0f, 1f, 0f) * moveSpeed / Variables.speedDampener);
             physics.angularVelocity = 0f;
             physics.velocity = Vector2.up * moveSpeed / Variables.speedDampener;
-        } else {
+        } else if (!bonked){
             physics.velocity = Vector2.zero;
         }
     }
@@ -80,11 +98,17 @@ public abstract class AbstractEnemy : MonoBehaviour {
         bool colliderIsNotNull = sight.collider != null;
         if (colliderIsNotNull) {
             bool colliderIsNotThisGameObject = (sight.collider.gameObject != gameObject);
-            bool colliderIsPlayer = sight.collider.gameObject.Equals(player);
+            bool colliderIsPlayer = sight.collider.gameObject.CompareTag("Player") || 
+                                    sight.collider.gameObject.CompareTag("Shield");
 
             return colliderIsNotThisGameObject && colliderIsPlayer;
         }
 
         return false;
+    }
+
+    public void SetBonked(bool isBonked) {
+        bonked = isBonked;
+        bonkTimer = 0f;
     }
 }

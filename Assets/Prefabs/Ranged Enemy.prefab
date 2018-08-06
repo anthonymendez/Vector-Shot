@@ -111,6 +111,7 @@ MonoBehaviour:
   masksDetectedByRaycast:
     serializedVersion: 2
     m_Bits: 1536
+  bonkStunTime: 1
   rayColor: {r: 0, g: 1, b: 0.008378744, a: 1}
   timeBetweenShots: 1
   laserPool: {fileID: 114847681297626020, guid: 2a52bb17045f65e438de9f68c202c228,

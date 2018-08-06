@@ -8,8 +8,11 @@ public class Laser : MonoBehaviour {
 
     public bool isFriendly;
 
+    [SerializeField] AudioClip shipExploding, hitShield;
     [SerializeField] float moveSpeed;
-    [SerializeField] List<string> collidableGameObjectTags = new List<string>() { "LaserShot", "MEnemy", "REnemy", "Wall", "Player" };
+    [SerializeField] List<string> collidableGameObjectTags = new List<string>() {
+        "LaserShot", "MEnemy", "REnemy", "Wall", "Player", "Shield"
+    };
 
     GameObjectPool laserPool, meleeEnemyPool, rangedEnemyPool;
     Rigidbody2D physics;
@@ -49,16 +52,19 @@ public class Laser : MonoBehaviour {
             Debug.Log(string.Format("Laser hit: {0}; Laser is Friendly: {1}", collision.gameObject.tag, isFriendly));
             if (collision.gameObject.CompareTag("REnemy") && isFriendly) {
                 rangedEnemyPool.AddGameObject(collision.gameObject);
-                AudioSource.PlayClipAtPoint(shipExplosionSound.clip, transform.position);
+                AudioSource.PlayClipAtPoint(shipExploding, transform.position);
                 Variables.score += 10;
             } else if (collision.gameObject.CompareTag("MEnemy") && isFriendly) {
                 meleeEnemyPool.AddGameObject(collision.gameObject);
-                AudioSource.PlayClipAtPoint(shipExplosionSound.clip, transform.position);
+                AudioSource.PlayClipAtPoint(shipExploding, transform.position);
                 Variables.score += 10;
+            } else if (collision.gameObject.CompareTag("Shield") && !isFriendly) {
+                AudioSource.PlayClipAtPoint(hitShield, transform.position);
+                collision.gameObject.GetComponent<Shield>().DamageShield(1);
             } else if (collision.gameObject.CompareTag("Player") && !isFriendly) {
-                AudioSource.PlayClipAtPoint(shipExplosionSound.clip, transform.position);
+                AudioSource.PlayClipAtPoint(shipExploding, transform.position);
                 collision.gameObject.SetActive(false);
-            }
+            } 
         } 
     }
 
