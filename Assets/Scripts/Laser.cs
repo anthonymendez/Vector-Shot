@@ -16,10 +16,8 @@ public class Laser : MonoBehaviour {
 
     GameObjectPool laserPool, meleeEnemyPool, rangedEnemyPool;
     Rigidbody2D physics;
-    AudioSource shipExplosionSound;
 
     void Awake() {
-        shipExplosionSound = GetComponent<AudioSource>();
         laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
         meleeEnemyPool = GameObject.FindWithTag("MEnemyPool").GetComponent<GameObjectPool>();
         rangedEnemyPool = GameObject.FindWithTag("REnemyPool").GetComponent<GameObjectPool>();

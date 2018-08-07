@@ -5,9 +5,25 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+    [Header("Control Properties")]
+    [SerializeField] string moveHorizontalInputName = "Horizontal";
+    [SerializeField] string moveVerticalInputName = "Vertical";
+    [SerializeField] string lookHorizontalInputName = "LookHorizontal";
+    [SerializeField] string lookVerticalInputName = "LookVertical";
+    [SerializeField] bool disableKeyboardAndMouse = false;
+    [SerializeField] float lookStickDeadzone = 0.2f;
+    [SerializeField] string shootLaserInputName = "Fire1";
+    [SerializeField] string useShieldInputName = "Fire2";
+    [SerializeField] string reloadLasersInputName = "ReloadAmmo";
+    Vector3 oldMousePosition = Vector3.zero;
+    Quaternion oldRotation = Quaternion.identity;
+    
+
+    [Header("Multiplayer Properties")]
+    [SerializeField] int playerNumber = 1;
+
     [Header("Movement Properties")]
     [SerializeField] float moveSpeed = 35f;
-    [SerializeField] float rotateSpeed = 500f;
 
     [Header("Shooting Properties")]
     [SerializeField] float shotDelay = 0.25f;
@@ -69,28 +85,49 @@ public class Player : MonoBehaviour {
 
     private void ProcessTranslation() {
         //Get X and Y movements
-        float moveX = Input.GetAxis("Horizontal"), 
-              moveY = Input.GetAxis("Vertical");
-        Transform newTrasnfrom = transform;
+        float moveX = Input.GetAxis(moveHorizontalInputName.ToInputConverter(playerNumber)), 
+              moveY = Input.GetAxis(moveVerticalInputName.ToInputConverter(playerNumber));
+        Transform newTransform = transform;
         //Vertical and Horizontal to move in all directions
         Vector2 movement = new Vector2(moveX, moveY);
         //Set rotation to 0 so we move relative to camera
-        newTrasnfrom.rotation = Quaternion.Euler(0f, 0f, 0f);
-        newTrasnfrom.Translate(movement * moveSpeed / Variables.speedDampener);
+        newTransform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        newTransform.Translate(movement * moveSpeed / Variables.speedDampener);
 
-        physics.MovePosition(newTrasnfrom.position);
+        physics.MovePosition(newTransform.position);
     }
 
     private void ProcessRotation() {
-        //Mouse position to aim our ship
-        float cameraDistance = mainCamera.transform.position.y - transform.position.y;
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cameraDistance));
+        float xLook = Input.GetAxis(lookHorizontalInputName.ToInputConverter(playerNumber));
+        float yLook = Input.GetAxis(lookVerticalInputName.ToInputConverter(playerNumber));
+        bool usingLookStick = (Math.Abs(xLook) > lookStickDeadzone) || (Math.Abs(yLook) > lookStickDeadzone);
 
-        float angleRadian = Mathf.Atan2(mousePosition.y - transform.position.y, mousePosition.x - transform.position.x);
-        float angleDegrees = Mathf.Rad2Deg * angleRadian;
+        Vector3 newMousePosition = Input.mousePosition;
+        bool mouseIsMoving = newMousePosition != oldMousePosition;
 
-        transform.rotation = Quaternion.Euler(0f, 0f, angleDegrees - 90);
+        if (!disableKeyboardAndMouse && !usingLookStick && mouseIsMoving) {
+            //Mouse position to aim our ship
+            Debug.Log(string.Format("Using Keyboard and Mouse Controls on P{0}", playerNumber));
+            float cameraDistance = mainCamera.transform.position.y - transform.position.y;
+            Vector3 mousePosition = newMousePosition;
+            mousePosition = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cameraDistance));
+
+            float angleRadian = Mathf.Atan2(mousePosition.y - transform.position.y, mousePosition.x - transform.position.x);
+            float angleDegrees = Mathf.Rad2Deg * angleRadian;
+
+            transform.rotation = Quaternion.Euler(0f, 0f, angleDegrees - 90);
+            oldRotation = transform.rotation;
+        } else if (usingLookStick){
+            // Use stick direction to aim our ship
+            Debug.Log(string.Format("Using Look Stick Controls on P{0}", playerNumber));
+            float angleRadian = Mathf.Atan2(yLook, -xLook);
+            float angleDegrees = Mathf.Rad2Deg * angleRadian;
+
+            transform.rotation = Quaternion.Euler(0f, 0f, angleDegrees - 90);
+            oldRotation = transform.rotation;
+        } else {
+            transform.rotation = oldRotation;
+        }
     }
 
     private void ProcessShieldStatus() {
@@ -102,7 +139,7 @@ public class Player : MonoBehaviour {
     }
 
     private void UseShield() {
-        bool activateShield = Input.GetButton("Fire2");
+        bool activateShield = Input.GetButton(useShieldInputName.ToInputConverter(playerNumber));
 
         if (activateShield) {
             shieldGameObject.SetActive(true);
@@ -122,18 +159,19 @@ public class Player : MonoBehaviour {
     }
 
     private void ProcessShooting() {
-        if (shieldGameObject.activeSelf) {
-            return;
-        }
-
-        bool reloadKeyDown = Input.GetKeyDown(KeyCode.R);
+        bool reloadKeyDown = Input.GetButtonDown(reloadLasersInputName.ToInputConverter(playerNumber));
         if (reloadKeyDown) {
             isReloading = true;
             reloadSound.Play();
             reloadingTime = 0;
         }
 
-        bool isShooting = Input.GetButton("Fire1") || Input.GetButtonDown("Fire1");
+        if (shieldGameObject.activeSelf) {
+            return;
+        }
+
+        bool isShooting = Input.GetButton(shootLaserInputName.ToInputConverter(playerNumber)) || 
+                          Input.GetButtonDown(shootLaserInputName.ToInputConverter(playerNumber));
         if (!isReloading && isShooting && shotsAvailable > 0 && timeSinceLastShot >= shotDelay) {
             timeSinceLastShot = 0;
             GameObject shot = laserPool.GetGameObject();

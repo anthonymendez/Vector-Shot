@@ -456,8 +456,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28b16644d642f5249885245558e10a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveHorizontalInputName: Horizontal
+  moveVerticalInputName: Vertical
+  lookHorizontalInputName: LookHorizontal
+  lookVerticalInputName: LookVertical
+  lookStickDeadzone: 0.2
+  shootLaserInputName: Fire1
+  useShieldInputName: Fire2
+  reloadLasersInputName: ReloadAmmo
+  playerNumber: 1
   moveSpeed: 35
-  rotateSpeed: 500
   shotDelay: 0.25
   reloadTime: 0.5
   shotLimit: 5
