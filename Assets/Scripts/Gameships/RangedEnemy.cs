@@ -38,7 +38,7 @@ public class RangedEnemy : AbstractEnemy {
         GameObject shot = laserPool.GetGameObject();
         shot.transform.rotation = transform.rotation;
         shot.transform.position = transform.position;
-        shot.GetComponent<Laser>().isFriendly = false;
+        shot.GetComponent<Laser>().laserOrigin = LaserOrigin.Enemy;
         shot.transform.Translate(0f, 2.5f, 0f);
     }
 

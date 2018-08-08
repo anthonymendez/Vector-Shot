@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class Laser : MonoBehaviour {
 
-    public const int ID = 0;
-
-    public bool isFriendly;
+    public LaserOrigin laserOrigin;
+    public int shotFromPlayer = -1;
 
     [SerializeField] AudioClip shipExploding, hitShield;
     [SerializeField] float moveSpeed;
@@ -47,23 +48,47 @@ public class Laser : MonoBehaviour {
         }
         if (HitCollidableObject(collision)) {
             AddToLaserPool();
-            Debug.Log(string.Format("Laser hit: {0}; Laser is Friendly: {1}", collision.gameObject.tag, isFriendly));
-            if (collision.gameObject.CompareTag("REnemy") && isFriendly) {
-                rangedEnemyPool.AddGameObject(collision.gameObject);
-                AudioSource.PlayClipAtPoint(shipExploding, transform.position);
-                Variables.score += 10;
-            } else if (collision.gameObject.CompareTag("MEnemy") && isFriendly) {
-                meleeEnemyPool.AddGameObject(collision.gameObject);
-                AudioSource.PlayClipAtPoint(shipExploding, transform.position);
-                Variables.score += 10;
-            } else if (collision.gameObject.CompareTag("Shield") && !isFriendly) {
-                AudioSource.PlayClipAtPoint(hitShield, transform.position);
-                collision.gameObject.GetComponent<Shield>().DamageShield(1);
-            } else if (collision.gameObject.CompareTag("Player") && !isFriendly) {
-                AudioSource.PlayClipAtPoint(shipExploding, transform.position);
-                collision.gameObject.SetActive(false);
-            } 
+
+            string collisionTag = collision.gameObject.tag;
+            if (collisionTag.Equals("REnemy") || collisionTag.Equals("MEnemy")) {
+                HandleEnemyCollision(collision, collisionTag);
+            } else if (collisionTag.Equals("Shield")) {
+                HandleShieldCollision(collision);
+            } else if (collisionTag.Equals("Player")) {
+                HandlePlayerCollision(collision);
+            }
         } 
+    }
+
+    private void HandleEnemyCollision(Collision2D collision, string collisionTag) {
+        PerformDestroyEnemy();
+
+        bool isREnemy = collisionTag.Equals("REnemy");
+        if (isREnemy) {
+            rangedEnemyPool.AddGameObject(collision.gameObject);
+        } else {
+            meleeEnemyPool.AddGameObject(collision.gameObject);
+        }
+    }
+
+    private void HandleShieldCollision(Collision2D collision) {
+        AudioSource.PlayClipAtPoint(hitShield, transform.position);
+        collision.gameObject.GetComponent<Shield>().DamageShield(1);
+    }
+    private void HandlePlayerCollision(Collision2D collision) {
+        int playerNumber = collision.gameObject.GetComponent<Player>().GetPlayerNumber();
+
+        if (playerNumber != shotFromPlayer) {
+            AudioSource.PlayClipAtPoint(shipExploding, transform.position);
+            collision.gameObject.SetActive(false);
+        } else {
+            // Ignore if we hit and were shot from the same player
+        }
+    }
+
+    private void PerformDestroyEnemy() {
+        AudioSource.PlayClipAtPoint(shipExploding, transform.position);
+        Variables.score += 10;
     }
 
     private bool HitCollidableObject(Collision2D collision) {

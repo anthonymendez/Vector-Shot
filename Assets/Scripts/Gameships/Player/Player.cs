@@ -49,8 +49,16 @@ public class Player : MonoBehaviour, Bonkable {
     float reloadingTime;
     float shieldRechargingTime;
 
+    public int GetPlayerNumber() {
+        return playerNumber;
+    }
+
     public int GetShotsAvailable() {
         return shotsAvailable;
+    }
+
+    public void SetBonked(bool isBonked) {
+        this.isBonked = isBonked;
     }
 
     // Use this for initialization
@@ -176,7 +184,8 @@ public class Player : MonoBehaviour, Bonkable {
         if (!isReloading && isShooting && shotsAvailable > 0 && timeSinceLastShot >= shotDelay) {
             timeSinceLastShot = 0;
             GameObject shot = laserPool.GetGameObject();
-            shot.GetComponent<Laser>().isFriendly = true;
+            shot.GetComponent<Laser>().laserOrigin = LaserOrigin.Player;
+            shot.GetComponent<Laser>().shotFromPlayer = playerNumber;
             shot.transform.rotation = transform.rotation;
             //We're going to edit the position of the shot here so it's right in front our player
             shot.transform.position = transform.position;
@@ -194,7 +203,4 @@ public class Player : MonoBehaviour, Bonkable {
         }
     }
 
-    public void SetBonked(bool isBonked) {
-        this.isBonked = isBonked;
-    }
 }
