@@ -47,7 +47,6 @@ public class Laser : MonoBehaviour {
             laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
         }
         if (HitCollidableObject(collision)) {
-            AddToLaserPool();
 
             string collisionTag = collision.gameObject.tag;
             if (collisionTag.Equals("REnemy") || collisionTag.Equals("MEnemy")) {
@@ -61,6 +60,11 @@ public class Laser : MonoBehaviour {
     }
 
     private void HandleEnemyCollision(Collision2D collision, string collisionTag) {
+        if (laserOrigin.IsLaserFromEnemy()) {
+            return;
+        }
+
+        AddToLaserPool();
         PerformDestroyEnemy();
 
         bool isREnemy = collisionTag.Equals("REnemy");
@@ -72,13 +76,23 @@ public class Laser : MonoBehaviour {
     }
 
     private void HandleShieldCollision(Collision2D collision) {
-        AudioSource.PlayClipAtPoint(hitShield, transform.position);
-        collision.gameObject.GetComponent<Shield>().DamageShield(1);
+        Shield shieldBeingHit = collision.gameObject.GetComponent<Shield>();
+        Player shieldOwner = shieldBeingHit.transform.parent.GetComponent<Player>();
+        int playerNumber = shieldOwner.GetPlayerNumber();
+
+        if(playerNumber != shotFromPlayer) {
+            AddToLaserPool();
+            AudioSource.PlayClipAtPoint(hitShield, transform.position);
+            shieldBeingHit.DamageShield(1);
+        } else {
+            // Ignore if we hit and were shot from the same player
+        }
     }
     private void HandlePlayerCollision(Collision2D collision) {
         int playerNumber = collision.gameObject.GetComponent<Player>().GetPlayerNumber();
 
         if (playerNumber != shotFromPlayer) {
+            AddToLaserPool();
             AudioSource.PlayClipAtPoint(shipExploding, transform.position);
             collision.gameObject.SetActive(false);
         } else {

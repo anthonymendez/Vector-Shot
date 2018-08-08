@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 114963469116609162}
   - component: {fileID: 212211443728451688}
   - component: {fileID: 50048992562207094}
-  - component: {fileID: 60091230680124414}
   - component: {fileID: 82299681935295412}
+  - component: {fileID: 61498609275020082}
   m_Layer: 0
   m_Name: LaserShot
   m_TagString: LaserShot
@@ -38,8 +38,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1705620197107098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.852707, y: 6.729686, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.5, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -64,8 +64,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &60091230680124414
-PolygonCollider2D:
+--- !u!61 &61498609275020082
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -80,21 +80,15 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.048, y: 2.048}
+    oldSize: {x: 0.164, y: 1.852}
     newSize: {x: 2.048, y: 2.048}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.064, y: 0.99200004}
-      - {x: -0.096, y: 0.99200004}
-      - {x: -0.096, y: -0.92800003}
-      - {x: 0, y: -0.96000004}
-      - {x: 0.096, y: -0.96000004}
-      - {x: 0.16000001, y: -0.896}
-      - {x: 0.16000001, y: 0.96000004}
+  serializedVersion: 2
+  m_Size: {x: 0.164, y: 1.852}
+  m_EdgeRadius: 0
 --- !u!82 &82299681935295412
 AudioSource:
   m_ObjectHideFlags: 1
@@ -202,7 +196,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3825cc118a9a247a01999c2f20983d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFriendly: 0
+  laserOrigin: 0
+  shotFromPlayer: -1
   shipExploding: {fileID: 8300000, guid: 54e3e581a7b9e2648a3e016929d4a498, type: 3}
   hitShield: {fileID: 8300000, guid: f3062dbc29518df4dae3b853d2c0e2b6, type: 3}
   moveSpeed: 45

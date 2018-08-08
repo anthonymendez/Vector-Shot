@@ -18,10 +18,11 @@ public class Player : MonoBehaviour, Bonkable {
     bool isBonked = false;
     Vector3 oldMousePosition = Vector3.zero;
     Quaternion oldRotation = Quaternion.identity;
-    
+
 
     [Header("Multiplayer Properties")]
     [SerializeField] int playerNumber = 1;
+    [SerializeField] public Color shipColor = Color.white;
 
     [Header("Movement Properties")]
     [SerializeField] float moveSpeed = 35f;
@@ -42,6 +43,7 @@ public class Player : MonoBehaviour, Bonkable {
     private Shield shield;
     private AudioSource laserShootSound, reloadSound;
     private Rigidbody2D physics;
+    private SpriteRenderer spriteRenderer;
 
     private int shotsAvailable = 5;
     bool isReloading;
@@ -51,6 +53,10 @@ public class Player : MonoBehaviour, Bonkable {
 
     public int GetPlayerNumber() {
         return playerNumber;
+    }
+
+    public int GetShotLimit() {
+        return shotLimit;
     }
 
     public int GetShotsAvailable() {
@@ -63,17 +69,26 @@ public class Player : MonoBehaviour, Bonkable {
 
     // Use this for initialization
     void Start () {
-        reloadingTime = 0;
-        timeSinceLastShot = 0;
-        shieldRechargingTime = 0;
+        InitializePlayerComponents();
+        InitializePlayerValues();
+    }
+
+    private void InitializePlayerComponents() {
         laserShootSound = GetComponents<AudioSource>()[0];
         reloadSound = GetComponents<AudioSource>()[1];
         physics = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponentsInChildren<SpriteRenderer>()[0];
         mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         shield = shieldGameObject.GetComponent<Shield>();
-        Time.timeScale = 1;
     }
-    
+
+    private void InitializePlayerValues() {
+        reloadingTime = 0;
+        timeSinceLastShot = 0;
+        shieldRechargingTime = 0;
+        spriteRenderer.color = shipColor;
+    }
+
     // Update is called once per frame
     void Update () {
         
