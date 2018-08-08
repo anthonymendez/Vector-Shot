@@ -55,6 +55,19 @@ public class Player : MonoBehaviour, Bonkable {
         return playerNumber;
     }
 
+    public void SetPlayerNumber(int pN) {
+        playerNumber = pN;
+    }
+
+    public Color GetColor() {
+        return shipColor;
+    }
+
+    public void SetColor(Color newColor) {
+        shipColor = newColor;
+        spriteRenderer.color = newColor;
+    }
+
     public int GetShotLimit() {
         return shotLimit;
     }
@@ -68,7 +81,7 @@ public class Player : MonoBehaviour, Bonkable {
     }
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         InitializePlayerComponents();
         InitializePlayerValues();
     }
@@ -78,7 +91,9 @@ public class Player : MonoBehaviour, Bonkable {
         reloadSound = GetComponents<AudioSource>()[1];
         physics = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentsInChildren<SpriteRenderer>()[0];
+        activeShots = GameObject.FindWithTag("ActiveLaser");
         mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+        laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
         shield = shieldGameObject.GetComponent<Shield>();
     }
 

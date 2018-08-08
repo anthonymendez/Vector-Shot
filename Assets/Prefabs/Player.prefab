@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 60025852832386382}
   - component: {fileID: 50941963705805050}
   - component: {fileID: 82690660626347326}
-  - component: {fileID: 81400097977916876}
   - component: {fileID: 82350463007045918}
   m_Layer: 10
   m_Name: Player
@@ -281,13 +280,6 @@ EdgeCollider2D:
   - {x: 1.5396893, y: -0.4451117}
   - {x: 1.6207302, y: -0.7644906}
   - {x: 1.5237634, y: -0.7652243}
---- !u!81 &81400097977916876
-AudioListener:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1151831063044786}
-  m_Enabled: 1
 --- !u!82 &82350463007045918
 AudioSource:
   m_ObjectHideFlags: 1

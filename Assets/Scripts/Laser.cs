@@ -55,6 +55,8 @@ public class Laser : MonoBehaviour {
                 HandleShieldCollision(collision);
             } else if (collisionTag.Equals("Player")) {
                 HandlePlayerCollision(collision);
+            } else {
+                AddToLaserPool();
             }
         } 
     }

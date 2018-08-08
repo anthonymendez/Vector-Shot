@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Cam : MonoBehaviour {
 
@@ -14,19 +15,24 @@ public class Cam : MonoBehaviour {
     [SerializeField] GameObject deathMenuPrefab;
 
     [Header("System Variables")]
-    private GameObject player;
+    private GameObject[] playerArray;
     private Vector3 velocity;
     private bool checkDied;
 
+    void Awake() {
+
+    }
+
     // Use this for initialization
     void Start () {
-        player = GameObject.FindWithTag("Player");
+        playerArray = GameObject.FindGameObjectsWithTag("Player");
         velocity = Vector3.zero;
         checkDied = false;
     }
 
     void Update() {
         CheckDead();
+
     }
 
     // Updates regardless of Framerate
@@ -37,18 +43,29 @@ public class Cam : MonoBehaviour {
     }
 
     private void SmoothFollowPlayer() {
-        transform.position = Vector3.SmoothDamp(transform.position, player.transform.position, ref velocity, smoothTime, maxSpeed, Time.deltaTime);
+        transform.position = Vector3.SmoothDamp(transform.position, playerArray[0].transform.position, ref velocity, smoothTime, maxSpeed, Time.deltaTime);
         transform.position = new Vector3(transform.position.x, transform.position.y, zIndexPostion);
     }
 
     //If player is dead, we're going to end the game and bring up the menu
     void CheckDead() {
         //If the player is dead...
-        if (isDead() && !checkDied) {
-            Time.timeScale = 0;
-            checkDied = true;
-            CreateDeathMenu();
+        if (playerArray.Length > 1) {
+            int countAlive = 0;
+            foreach (GameObject player in playerArray) {
+                if (player.activeSelf)
+                    countAlive++;
+            }
+            Debug.Log(string.Format("AmountOfPlayersAlive: {0}", countAlive));
+            if(countAlive <= 1) {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
         }
+        //if (isDead() && !checkDied) {
+        //    Time.timeScale = 0;
+        //    checkDied = true;
+        //    CreateDeathMenu();
+        //}
     }
 
     private void CreateDeathMenu() {
@@ -57,6 +74,6 @@ public class Cam : MonoBehaviour {
     }
 
     public bool isDead() {
-        return !player.activeSelf;
+        return !playerArray[0].activeSelf;
     }
 }
