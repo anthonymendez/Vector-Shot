@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour, Bonkable {
 
     [Header("Control Properties")]
     [SerializeField] string moveHorizontalInputName = "Horizontal";
@@ -15,6 +15,7 @@ public class Player : MonoBehaviour {
     [SerializeField] string shootLaserInputName = "Fire1";
     [SerializeField] string useShieldInputName = "Fire2";
     [SerializeField] string reloadLasersInputName = "ReloadAmmo";
+    bool isBonked = false;
     Vector3 oldMousePosition = Vector3.zero;
     Quaternion oldRotation = Quaternion.identity;
     
@@ -193,4 +194,7 @@ public class Player : MonoBehaviour {
         }
     }
 
+    public void SetBonked(bool isBonked) {
+        this.isBonked = isBonked;
+    }
 }

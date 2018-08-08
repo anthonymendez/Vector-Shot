@@ -51,7 +51,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1693759782874408
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,7 +437,7 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 0, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 0, g: 1, b: 0.32908177, a: 1}
   collidableLayerMasks:
     serializedVersion: 2
     m_Bits: 19968
@@ -460,7 +460,8 @@ MonoBehaviour:
   moveVerticalInputName: Vertical
   lookHorizontalInputName: LookHorizontal
   lookVerticalInputName: LookVertical
-  lookStickDeadzone: 0.2
+  disableKeyboardAndMouse: 1
+  lookStickDeadzone: 0.3
   shootLaserInputName: Fire1
   useShieldInputName: Fire2
   reloadLasersInputName: ReloadAmmo
