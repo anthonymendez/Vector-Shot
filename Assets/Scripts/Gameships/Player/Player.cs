@@ -124,7 +124,7 @@ public class Player : MonoBehaviour, Bonkable {
     }
 
     private void ProcessPausing() {
-        bool pressedPause = Input.GetButtonDown(pauseInputName.ToInputConverter(playerNumber));
+        bool pressedPause = ButtonOrAxisDown(pauseInputName);
 
         if (!pressedPause)
             return;
@@ -138,8 +138,8 @@ public class Player : MonoBehaviour, Bonkable {
 
     private void ProcessTranslation() {
         //Get X and Y movements
-        float moveX = Input.GetAxis(moveHorizontalInputName.ToInputConverter(playerNumber)), 
-              moveY = Input.GetAxis(moveVerticalInputName.ToInputConverter(playerNumber));
+        float moveX = GetAxis(moveHorizontalInputName), 
+              moveY = GetAxis(moveVerticalInputName);
         Transform newTransform = transform;
         //Vertical and Horizontal to move in all directions
         Vector2 movement = new Vector2(moveX, moveY);
@@ -151,8 +151,8 @@ public class Player : MonoBehaviour, Bonkable {
     }
 
     private void ProcessRotation() {
-        float xLook = Input.GetAxis(lookHorizontalInputName.ToInputConverter(playerNumber));
-        float yLook = Input.GetAxis(lookVerticalInputName.ToInputConverter(playerNumber));
+        float xLook = GetAxis(lookHorizontalInputName);
+        float yLook = GetAxis(lookVerticalInputName);
         bool usingLookStick = (Math.Abs(xLook) > lookStickDeadzone) || (Math.Abs(yLook) > lookStickDeadzone);
 
         Vector3 newMousePosition = Input.mousePosition;
@@ -192,13 +192,8 @@ public class Player : MonoBehaviour, Bonkable {
     }
 
     private void UseShield() {
-        bool activateShield = Input.GetButton(useShieldInputName.ToInputConverter(playerNumber));
-
-        if (activateShield) {
-            shieldGameObject.SetActive(true);
-        } else {
-            shieldGameObject.SetActive(false);
-        }
+        bool activateShield = ButtonOrAxis(useShieldInputName);
+        shieldGameObject.SetActive(activateShield);
     }
 
     private void ShieldRecharge() {
@@ -212,20 +207,16 @@ public class Player : MonoBehaviour, Bonkable {
     }
 
     private void ProcessShooting() {
-        bool reloadKeyDown = Input.GetButtonDown(reloadLasersInputName.ToInputConverter(playerNumber));
+        bool reloadKeyDown = ButtonOrAxisDown(reloadLasersInputName);
         if (reloadKeyDown) {
             isReloading = true;
             reloadSound.Play();
             reloadingTime = 0;
         }
 
-        if (shieldGameObject.activeSelf) {
-            return;
-        }
-
-        bool isShooting = Input.GetButton(shootLaserInputName.ToInputConverter(playerNumber)) || 
-                          Input.GetButtonDown(shootLaserInputName.ToInputConverter(playerNumber));
-        if (!isReloading && isShooting && shotsAvailable > 0 && timeSinceLastShot >= shotDelay) {
+        bool isShooting = ButtonOrAxis(shootLaserInputName);
+        bool shieldIsNotActive = !shieldGameObject.activeSelf;
+        if (!isReloading && shieldIsNotActive && isShooting && shotsAvailable > 0 && timeSinceLastShot >= shotDelay) {
             timeSinceLastShot = 0;
             GameObject shot = laserPool.GetGameObject();
             shot.GetComponent<Laser>().laserOrigin = LaserOrigin.Player;
@@ -245,6 +236,24 @@ public class Player : MonoBehaviour, Bonkable {
                 reloadingTime += Time.deltaTime;
             }
         }
+    }
+
+    private float GetAxis(string inputName) {
+        return Input.GetAxis(inputName.ToInputConverter(playerNumber));
+    }
+
+    private float GetAxisRaw(string inputName) {
+        return Input.GetAxisRaw(inputName.ToInputConverter(playerNumber));
+    }
+
+    private bool ButtonOrAxisDown(string inputName) {
+        return Input.GetButtonDown(inputName.ToInputConverter(playerNumber)) ||
+               GetAxisRaw(inputName) > Mathf.Epsilon;
+    }
+
+    private bool ButtonOrAxis(string inputName) {
+        return Input.GetButton(inputName.ToInputConverter(playerNumber)) ||
+               ButtonOrAxisDown(inputName);
     }
 
 }
