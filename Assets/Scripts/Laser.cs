@@ -17,12 +17,14 @@ public class Laser : MonoBehaviour {
 
     GameObjectPool laserPool, meleeEnemyPool, rangedEnemyPool;
     Rigidbody2D physics;
+    Vector3 cameraPosition;
 
     void Awake() {
         laserPool = GameObject.FindWithTag("Laserpool").GetComponent<GameObjectPool>();
         meleeEnemyPool = GameObject.FindWithTag("MEnemyPool").GetComponent<GameObjectPool>();
         rangedEnemyPool = GameObject.FindWithTag("REnemyPool").GetComponent<GameObjectPool>();
         physics = GetComponent<Rigidbody2D>();
+        cameraPosition = FindObjectOfType<Cam>().transform.position;
     }
 
     // Use this for initialization
@@ -55,7 +57,7 @@ public class Laser : MonoBehaviour {
                 HandleShieldCollision(collision);
             } else if (collisionTag.Equals("Player")) {
                 HandlePlayerCollision(collision);
-            } else {
+            } else if (collisionTag.Equals("Wall") || collisionTag.Equals("LaserShot")) {
                 AddToLaserPool();
             }
         } 
@@ -84,7 +86,7 @@ public class Laser : MonoBehaviour {
 
         if(playerNumber != shotFromPlayer) {
             AddToLaserPool();
-            AudioSource.PlayClipAtPoint(hitShield, transform.position);
+            AudioSource.PlayClipAtPoint(hitShield, cameraPosition);
             shieldBeingHit.DamageShield(1);
         } else {
             // Ignore if we hit and were shot from the same player
@@ -95,7 +97,8 @@ public class Laser : MonoBehaviour {
 
         if (playerNumber != shotFromPlayer) {
             AddToLaserPool();
-            AudioSource.PlayClipAtPoint(shipExploding, transform.position);
+            FindObjectOfType<Cam>().AddCameraShake(0.2f);
+            AudioSource.PlayClipAtPoint(shipExploding, cameraPosition);
             collision.gameObject.SetActive(false);
         } else {
             // Ignore if we hit and were shot from the same player
@@ -103,7 +106,7 @@ public class Laser : MonoBehaviour {
     }
 
     private void PerformDestroyEnemy() {
-        AudioSource.PlayClipAtPoint(shipExploding, transform.position);
+        AudioSource.PlayClipAtPoint(shipExploding, cameraPosition);
         Variables.score += 10;
     }
 

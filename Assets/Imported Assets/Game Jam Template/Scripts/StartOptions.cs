@@ -79,7 +79,7 @@ public class StartOptions : MonoBehaviour {
 		//if changeMusicOnStart is true, call the PlayLevelMusic function of playMusic
 		if (changeMusicOnStart)
 		{
-			playMusic.PlayLevelMusic ();
+			playMusic.PlayLevelMusic();
 		}	
 	}
 
@@ -118,7 +118,8 @@ public class StartOptions : MonoBehaviour {
 		animMenuAlpha.SetTrigger ("fade");
 		Invoke("HideDelayed", fadeAlphaAnimationClip.length);
 		Debug.Log ("Game started in same scene! Put your game starting stuff here.");
-	}
+        SceneManager.LoadScene(SceneManager.GetSceneByName("TestArena_1").buildIndex);
+    }
 
 
 	public void PlayNewMusic()

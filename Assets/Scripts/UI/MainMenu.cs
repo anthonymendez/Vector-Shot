@@ -25,7 +25,7 @@ public class MainMenu : MonoBehaviour {
 	}
 
     void Play() {
-        SceneManager.LoadScene(SceneManager.GetSceneByName("mainQuickLevel").buildIndex);
+        SceneManager.LoadScene(SceneManager.GetSceneByName("TestArena_1").buildIndex);
     }
 
     void OptionsMenu() {

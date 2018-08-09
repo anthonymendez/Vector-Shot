@@ -200,7 +200,7 @@ MonoBehaviour:
   shotFromPlayer: -1
   shipExploding: {fileID: 8300000, guid: 54e3e581a7b9e2648a3e016929d4a498, type: 3}
   hitShield: {fileID: 8300000, guid: f3062dbc29518df4dae3b853d2c0e2b6, type: 3}
-  moveSpeed: 45
+  moveSpeed: 60
   collidableGameObjectTags:
   - LaserShot
   - MEnemy

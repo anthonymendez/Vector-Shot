@@ -13,19 +13,19 @@ public class PlayerSpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        joystickNames = Input.GetJoystickNames();
-
         Transform[] spawnPoints = spawnPointsHolder.GetComponentsInChildren<Transform>();
-        
-        // i is equal to 1 because the first transform is the holder itself
-        for (int i = 1; i < spawnPoints.Length && i < joystickNames.Length + 1; i++) {
-            Transform spawnPoint = spawnPoints[i];
+
+        for (int i = 0; i < 4; i++) {
+            if (!Helper.playerJoined[i])
+                continue;
+
+            Transform spawnPoint = spawnPoints[i + 1];
 
             Player spawnedPlayer = Instantiate(playerPrefab, transform);
             spawnedPlayer.transform.position = spawnPoint.position;
             spawnedPlayer.transform.parent = playerHolder;
-            spawnedPlayer.SetColor(spawnableColors[i-1]);
-            spawnedPlayer.SetPlayerNumber(i);
+            spawnedPlayer.SetColor(spawnableColors[i]);
+            spawnedPlayer.SetPlayerNumber(i + 1);
         }
 	}
 	

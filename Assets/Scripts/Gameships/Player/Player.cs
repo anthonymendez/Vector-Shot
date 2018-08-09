@@ -15,6 +15,7 @@ public class Player : MonoBehaviour, Bonkable {
     [SerializeField] string shootLaserInputName = "Fire1";
     [SerializeField] string useShieldInputName = "Fire2";
     [SerializeField] string reloadLasersInputName = "ReloadAmmo";
+    [SerializeField] string pauseInputName = "Start";
     bool isBonked = false;
     Vector3 oldMousePosition = Vector3.zero;
     Quaternion oldRotation = Quaternion.identity;
@@ -106,7 +107,7 @@ public class Player : MonoBehaviour, Bonkable {
 
     // Update is called once per frame
     void Update () {
-        
+        ProcessPausing();
     }
 
     void FixedUpdate() {
@@ -120,6 +121,19 @@ public class Player : MonoBehaviour, Bonkable {
         ProcessRotation();
         ProcessShieldStatus();
         ProcessShooting();
+    }
+
+    private void ProcessPausing() {
+        bool pressedPause = Input.GetButtonDown(pauseInputName.ToInputConverter(playerNumber));
+
+        if (!pressedPause)
+            return;
+
+        if(Time.timeScale == 0f) {
+            Time.timeScale = 1f;
+        } else {
+            Time.timeScale = 0f;
+        }
     }
 
     private void ProcessTranslation() {

@@ -18,7 +18,7 @@ public class TimeUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!mainCamera.isDead()) {
+        if (!mainCamera.IsDead()) {
             timeInSeconds += Time.deltaTime;
             text.text = string.Format(" Time {0:0.000}", timeInSeconds);
         }

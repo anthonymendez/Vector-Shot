@@ -6,6 +6,9 @@ public enum LaserOrigin { Enemy, Player }
 
 public static class Helper {
 
+    public static bool[] playerJoined = { false, false, false, false };
+    public static int[] playerScores = { 0, 0, 0, 0 };
+
     // Thank you Mikhael-H http://answers.unity.com/answers/1332280/view.html
     public static bool Contains(this LayerMask mask, int layer) {
         return mask == (mask | (1 << layer));
