@@ -11,8 +11,10 @@ public class PlayerSelect : MonoBehaviour {
 	void Update () {
         for (int i = 0; i < PlayerSelectMenus.Length; i++) {
             if(Input.GetButtonDown(string.Format("Start_P{0}", i+1))) {
+                Debug.Log("Activating player: " + (i + 1));
                 SetPlayerActive(true, i);
             } else if (Input.GetButtonDown(string.Format("Select_P{0}", i+1))) {
+                Debug.Log("Deactivating player: " + (i + 1));
                 SetPlayerActive(false, i);
             }
         }

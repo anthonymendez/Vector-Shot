@@ -57,6 +57,7 @@ public class Player : MonoBehaviour, Bonkable {
     }
 
     public void SetPlayerNumber(int pN) {
+        Debug.Log("Changing player number to: " + pN);
         playerNumber = pN;
     }
 
@@ -153,6 +154,7 @@ public class Player : MonoBehaviour, Bonkable {
     private void ProcessRotation() {
         float xLook = GetAxis(lookHorizontalInputName);
         float yLook = GetAxis(lookVerticalInputName);
+        Debug.Log(string.Format("Rotating: {0}", lookHorizontalInputName.ToInputConverter(playerNumber)));
         bool usingLookStick = (Math.Abs(xLook) > lookStickDeadzone) || (Math.Abs(yLook) > lookStickDeadzone);
 
         Vector3 newMousePosition = Input.mousePosition;
@@ -192,6 +194,7 @@ public class Player : MonoBehaviour, Bonkable {
     }
 
     private void UseShield() {
+        Debug.Log(string.Format("Using Shield: {0}", useShieldInputName.ToInputConverter(playerNumber)));
         bool activateShield = ButtonOrAxis(useShieldInputName);
         shieldGameObject.SetActive(activateShield);
     }
@@ -217,6 +220,7 @@ public class Player : MonoBehaviour, Bonkable {
         bool isShooting = ButtonOrAxis(shootLaserInputName);
         bool shieldIsNotActive = !shieldGameObject.activeSelf;
         if (!isReloading && shieldIsNotActive && isShooting && shotsAvailable > 0 && timeSinceLastShot >= shotDelay) {
+            Debug.Log(string.Format("Shooting from: {0}", shootLaserInputName.ToInputConverter(playerNumber)));
             timeSinceLastShot = 0;
             GameObject shot = laserPool.GetGameObject();
             shot.GetComponent<Laser>().laserOrigin = LaserOrigin.Player;
@@ -239,19 +243,23 @@ public class Player : MonoBehaviour, Bonkable {
     }
 
     private float GetAxis(string inputName) {
+        Debug.Log("GetAxis: " + playerNumber);
         return Input.GetAxis(inputName.ToInputConverter(playerNumber));
     }
 
     private float GetAxisRaw(string inputName) {
+        Debug.Log("GetAxisRaw: " + playerNumber);
         return Input.GetAxisRaw(inputName.ToInputConverter(playerNumber));
     }
 
     private bool ButtonOrAxisDown(string inputName) {
+        Debug.Log("ButtonOrAxisDown: " + playerNumber);
         return Input.GetButtonDown(inputName.ToInputConverter(playerNumber)) ||
                GetAxisRaw(inputName) > Mathf.Epsilon;
     }
 
     private bool ButtonOrAxis(string inputName) {
+        Debug.Log("ButtonOrAxis: " + playerNumber);
         return Input.GetButton(inputName.ToInputConverter(playerNumber)) ||
                ButtonOrAxisDown(inputName);
     }
